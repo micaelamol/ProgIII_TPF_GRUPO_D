@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import especialidadesRouter from "./src/routers/especialidadesRouter.js";
+import especialidadesRouter from "./src/routers/especialidades.router.js";
 
 dotenv.config();
 
