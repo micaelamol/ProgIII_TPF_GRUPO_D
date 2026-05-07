@@ -2,33 +2,50 @@ import mysql from "mysql2/promise";
 import { connection } from "./connection.js";
 
 export class Especialidades {
-  static async listarEspecialidades(param) {
+          //método estático para listar especialidades, que puede recibir un parámetro opcional para filtrar por id de especialidad
+  static async listarEspecialidades() {
     //si no trae parametros lista todas las especialidades, si trae un id de especialidad lista solo esa especialidad
     try {
-      if (param == undefined) {
+      
         const sql = "SELECT * FROM especialidades";
         const [rows] = await connection.query(sql); //devuelve una array de objetos con los datos de las especialidades
-        //console.log("EspecialidadesModel.listarEspecialidades: Especialidades obtenidas:",rows,);
+        
         return rows;
-      } else {
-        const sql = `SELECT * FROM especialidades WHERE id_especialidad = ? AND activo = 1`;
-        const [rows] = await connection.query(sql, [param]); //devuelve una array de objetos con los datos de las especialidades
+      
+      
+    } catch (error) {
+      
+      throw  error
+        
+    } 
+  }
 
-        if (rows.length === 0) {
-          const error = new Error(
-            `No se encontró la especialidad con id ${param}`,
-          );
+
+  static async listarEspecialidadPorId(id) {
+    try{
+    const sql = `SELECT * FROM especialidades WHERE id_especialidad = ?`;
+        const [rows] = await connection.query(sql, [id]); 
+        
+        if(rows.length === 0){
+          const error = new Error(`No se encontró la especialidad con id ${id}`);
           error.status = 404;
-
+          
           throw error;
+          
         }
         return rows;
-      }
+      
     } catch (error) {
-      throw error;
-    }
+      
+      throw  error
+        
+    } 
   }
-  static async crearEspecialidad(nombre) {
+  
+
+
+      //crear la nueva especialidad en la base de datos, recibe el nombre de la especialidad y devuelve un objeto con el id y el nombre de la nueva especialidad creada
+    static async crearEspecialidad(nombre) {
     try {
       const sql = "INSERT INTO especialidades (nombre) VALUES (?)";
       const [result] = await connection.query(sql, [nombre]);
@@ -38,8 +55,8 @@ export class Especialidades {
       throw error;
     }
   }
-
-   static async eliminarEspecialidad(id) {
+    //eliminacion logica de la especialidad de la base de datos, recibe el id de la especialidad a eliminar y devuelve un mensaje de éxito o error
+  static async eliminarEspecialidad(id) {
     try {
       const sql = "UPDATE especialidades SET activo = 0 WHERE id_especialidad = ?";
       const [result] = await connection.query(sql, [id]);
