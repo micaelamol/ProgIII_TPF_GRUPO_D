@@ -5,10 +5,10 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "index.js",
+  "main": "turnos.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch index.js"
+    "start": "node --watch turnos.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
