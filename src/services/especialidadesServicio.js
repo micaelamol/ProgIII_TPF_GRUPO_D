@@ -3,10 +3,10 @@ import { Especialidades } from "../db/especialidades.js"
 export default class EspecialidadesServicio {
 
     static async obtenerEspecialidades() {
-        
-     const especialidades = await Especialidades.listarEspecialidades();
-            return especialidades;
-         
+
+        const especialidades = await Especialidades.listarEspecialidades();
+        return especialidades;
+
     }
 
     static async obtenerEspecialidadPorId(id) {
