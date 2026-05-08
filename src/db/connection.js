@@ -1,7 +1,9 @@
 import mysql from "mysql2/promise";
-import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
 
+
+ 
+process.loadEnvFile( path.resolve("./.env"));
 export const connection = await mysql.createPool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
