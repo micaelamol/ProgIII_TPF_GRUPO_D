@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { check, param } from "express-validator";
 import { EspecialidadesController } from "../../controllers/especialidadesController.js";
-import { validarCampos } from "../../middlewares/errorHandler.js";
+import { validarCampos } from "../../middlewares/validarCampos.js";
 
 const router = Router();
 

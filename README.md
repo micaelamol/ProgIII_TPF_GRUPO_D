@@ -14,9 +14,14 @@ Sistema de gestión de turnos médicos que permite administrar especialidades, m
 
 ### Funcionalidades
 
-- BREAD completo de Especialidades
-- Versionado de API (`/api/v1`)
-- Soft delete
+- BREAD completo de una entidad.
+- División en capas.
+- Versionado del API Rest.
+- Nombres correctos en rutas.
+- Uso de códigos de estados.
+- Respuesta consistentes.
+
+**Continuara...**
 
 ### Equipo
 

@@ -11,7 +11,7 @@ const obtenerEspecialidades = async (req, res) => {
         });
     } catch (error) {
         // console.log(error); 
-        res.status(500).json({ estado: false, msg: "Error al obtener especialidades" });
+        res.status(error.status || 500).json({ estado: false, msg: error.message });
     }
 };
 
@@ -31,7 +31,7 @@ const obtenerEspecialidadPorId = async (req, res) => {
     }
 };
 
-// POST
+// POST - Crear una
 const crearEspecialidad = async (req, res) => {
     try {
         const { nombre } = req.body;
@@ -43,11 +43,11 @@ const crearEspecialidad = async (req, res) => {
         });
     } catch (error) {
         // console.log(error);
-        res.status(500).json({ estado: false, msg: "Error al crear especialidad" });
+        res.status(error.status || 500).json({ estado: false, msg: error.message });
     }
 };
 
-// PUT
+// PUT - Actualizar
 const actualizarEspecialidad = async (req, res) => {
     try {
         const { id_especialidad } = req.params;
@@ -64,7 +64,7 @@ const actualizarEspecialidad = async (req, res) => {
     }
 };
 
-// DELETE
+// DELETE - Eliminar (Soft delete)
 const eliminarEspecialidad = async (req, res) => {
     try {
         const { id_especialidad } = req.params;
