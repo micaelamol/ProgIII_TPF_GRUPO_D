@@ -23,6 +23,6 @@ Sistema de gestión de turnos médicos que permite administrar especialidades, m
 - Vanesa Micaela Molina
 - Enzo Sebastian Guido
 - Alethia Azul Gerez Medina
-- Carlos
-- Paola
+- Carlos Gabrovich
+- Paola Peñalva Rebaquela
 - Camila Battagliotti
