@@ -10,7 +10,7 @@ export default class EspecialidadesServicio {
     }
 
     static async obtenerEspecialidadPorId(id) {
-        const especialidad = await Especialidades.obtenerEspecialidadPorId(id);
+        const especialidad = await Especialidades.listarEspecialidadPorId(id);
         return especialidad
     }
 
@@ -29,5 +29,5 @@ export default class EspecialidadesServicio {
         return resultado;
     }
 
-    
+
 }
