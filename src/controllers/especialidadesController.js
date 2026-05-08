@@ -1,9 +1,9 @@
-import { Especialidades } from "../db/especialidades.js";
+import EspecialidadesServicio from "../services/especialidadesServicio.js";
 
 // GET todas
 const obtenerEspecialidades = async (req, res) => {
     try {
-        const listado = await Especialidades.listarEspecialidades();
+        const listado = await EspecialidadesServicio.obtenerEspecialidades();
         res.status(200).json({
             listado,
             estado: true,
@@ -19,9 +19,9 @@ const obtenerEspecialidades = async (req, res) => {
 const obtenerEspecialidadPorId = async (req, res) => {
     try {
         const { id_especialidad } = req.params;
-        const listado = await Especialidades.listarEspecialidadPorId(id_especialidad);
+        const especialidad = await EspecialidadesServicio.obtenerEspecialidadPorId(id_especialidad);
         res.status(200).json({
-            listado,
+            especialidad,
             estado: true,
             msg: "Especialidad obtenida con éxito!",
         });
@@ -35,7 +35,7 @@ const obtenerEspecialidadPorId = async (req, res) => {
 const crearEspecialidad = async (req, res) => {
     try {
         const { nombre } = req.body;
-        const unaEspecialidad = await Especialidades.crearEspecialidad(nombre);
+        const unaEspecialidad = await EspecialidadesServicio.crearEspecialidad(nombre);
         res.status(201).json({
             especialidad: unaEspecialidad,
             estado: true,
@@ -52,7 +52,7 @@ const actualizarEspecialidad = async (req, res) => {
     try {
         const { id_especialidad } = req.params;
         const { nombre } = req.body;
-        const unaEspecialidadActualizada = await Especialidades.actualizarEspecialidad(id_especialidad, nombre);
+        const unaEspecialidadActualizada = await EspecialidadesServicio.actualizarEspecialidad(id_especialidad, nombre);
         res.status(200).json({
             especialidad: unaEspecialidadActualizada,
             estado: true,
@@ -68,7 +68,7 @@ const actualizarEspecialidad = async (req, res) => {
 const eliminarEspecialidad = async (req, res) => {
     try {
         const { id_especialidad } = req.params;
-        const unaEspecialidadEliminada = await Especialidades.eliminarEspecialidad(id_especialidad);
+        const unaEspecialidadEliminada = await EspecialidadesServicio.eliminarEspecialidad(id_especialidad);
         res.status(200).json({
             especialidad: unaEspecialidadEliminada,
             estado: true,

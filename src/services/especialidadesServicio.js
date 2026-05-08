@@ -2,11 +2,32 @@ import { Especialidades } from "../db/especialidades.js"
 
 export default class EspecialidadesServicio {
 
-    constructor(){
-        this.especialidades = new Especialidades();
+    static async obtenerEspecialidades() {
+        
+     const especialidades = await Especialidades.listarEspecialidades();
+            return especialidades;
+         
     }
 
-    buscarTodas = () => {
-        return this.especialidades.buscarTodas();    
+    static async obtenerEspecialidadPorId(id) {
+        const especialidad = await Especialidades.obtenerEspecialidadPorId(id);
+        return especialidad
     }
+
+    static async crearEspecialidad(especialidad) {
+        const nuevaEspecialidad = await Especialidades.crearEspecialidad(especialidad);
+        return nuevaEspecialidad;
+    }
+
+    static async actualizarEspecialidad(id, especialidad) {
+        const especialidadActualizada = await Especialidades.actualizarEspecialidad(id, especialidad);
+        return especialidadActualizada;
+    }
+
+    static async eliminarEspecialidad(id) {
+        const resultado = await Especialidades.eliminarEspecialidad(id);
+        return resultado;
+    }
+
+    
 }
