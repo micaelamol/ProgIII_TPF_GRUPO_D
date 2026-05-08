@@ -1,33 +1,37 @@
 import mysql from "mysql2/promise";
 import { connection } from "./connection.js";
 
-export class EspecialidadesModel {
-  static async listarEspecialidades(param) {
-    //si no trae parametros lista todas las especialidades, si trae un id de especialidad lista solo esa especialidad
+export class Especialidades {
+  static async listarEspecialidades() {
+    //lista todas las especialidades
     try {
-      if (param == undefined) {
-        const sql = "SELECT * FROM especialidades";
+      
+        const sql = "SELECT * FROM especialidades WHERE ACTIVO = 1";
         const [rows] = await connection.query(sql); //devuelve una array de objetos con los datos de las especialidades
         //console.log("EspecialidadesModel.listarEspecialidades: Especialidades obtenidas:",rows,);
         return rows;
-      } else {
-        const sql = `SELECT * FROM especialidades WHERE id_especialidad = ? AND activo = 1`;
-        const [rows] = await connection.query(sql, [param]); //devuelve una array de objetos con los datos de las especialidades
-
-        if (rows.length === 0) {
-          const error = new Error(
-            `No se encontró la especialidad con id ${param}`,
-          );
-          error.status = 404;
-
-          throw error;
-        }
-        return rows;
+      } catch (error) {
+        throw error;
       }
+  }
+
+
+static async listarEspecialidadPorId(id) {
+    try {
+      const sql = "SELECT * FROM especialidades WHERE id_especialidad = ? AND activo = 1";
+      const [rows] = await connection.query(sql, [id]);
+
+      if (rows.length === 0) {
+        const error = new Error(`No se encontró la especialidad con id ${id}`);
+        error.status = 404;
+        throw error;
+      }
+      return rows;
     } catch (error) {
       throw error;
     }
   }
+
   static async crearEspecialidad(nombre) {
     try {
       const sql = "INSERT INTO especialidades (nombre) VALUES (?)";
