@@ -28,6 +28,18 @@ router.post(
         check("nombre")
             .notEmpty().withMessage("El nombre es obligatorio.")
             .isLength({ max: 120 }).withMessage("Máximo 120 caracteres."),
+        check("descripcion")
+            .optional()
+            .isLength({ max: 255 }).withMessage("Máximo 255 caracteres."),
+        check("porcentaje_descuento")
+            .notEmpty().withMessage("El porcentaje de descuento es obligatorio.")
+            .isNumeric().withMessage("Debe ser un número."),
+        check("es_particular")
+            .notEmpty().withMessage("El campo 'es_particular' es obligatorio.")
+            .isInt({ min: 0, max: 1 }).withMessage("Debe ser 0 o 1."),
+        check("activo")
+            .notEmpty().withMessage("El campo 'activo' es obligatorio.")
+            .isInt({ min: 0, max: 1 }).withMessage("Debe ser 0 o 1."),
         validarCampos
     ],
     ObrasSocialesController.crearObraSocial
@@ -41,6 +53,18 @@ router.put(
         check("nombre")
             .notEmpty().withMessage("El nombre es obligatorio.")
             .isLength({ max: 120 }).withMessage("Máximo 120 caracteres."),
+        check("descripcion")
+            .optional()
+            .isLength({ max: 255 }).withMessage("Máximo 255 caracteres."),
+        check("porcentaje_descuento")
+            .notEmpty().withMessage("El porcentaje de descuento es obligatorio.")
+            .isNumeric().withMessage("Debe ser un número."),
+        check("es_particular")
+            .notEmpty().withMessage("El campo 'es_particular' es obligatorio.")
+            .isInt({ min: 0, max: 1 }).withMessage("Debe ser 0 o 1."),
+        check("activo")
+            .notEmpty().withMessage("El campo 'activo' es obligatorio.")
+            .isInt({ min: 0, max: 1 }).withMessage("Debe ser 0 o 1."),
         validarCampos
     ],
     ObrasSocialesController.actualizarObraSocial

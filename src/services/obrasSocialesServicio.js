@@ -12,14 +12,30 @@ export default class ObrasSocialesServicio {
         return obraSocial;
     }
 
-    static async crearObraSocial(obraSocial) {
-        const nuevaObraSocial = await ObrasSociales.crearObraSocial(obraSocial);
-        return nuevaObraSocial;
+    static async crearObraSocial(body) {
+        const nuevaObraSocial = {
+            nombre: body.nombre,
+            descripcion: body.descripcion || null,
+            porcentaje_descuento: Number(body.porcentaje_descuento) || 0,
+            es_particular: body.es_particular ? 1 : 0,
+            activo: body.activo ? 1 : 0
+        };
+
+        const resultado = await ObrasSociales.crearObraSocial(nuevaObraSocial);
+        return resultado;
     }
 
-    static async actualizarObraSocial(id, obraSocial) {
-        const obraSocialActualizada = await ObrasSociales.actualizarObraSocial(id, obraSocial);
-        return obraSocialActualizada;
+    static async actualizarObraSocial(id, body) {
+        const obraSocialActualizada = {
+            nombre: body.nombre,
+            descripcion: body.descripcion || null,
+            porcentaje_descuento: Number(body.porcentaje_descuento) || 0,
+            es_particular: body.es_particular ? 1 : 0,
+            activo: body.activo ? 1 : 0
+        };
+
+        const resultado = await ObrasSociales.actualizarObraSocial(id, obraSocialActualizada);
+        return resultado;
     }
 
     static async eliminarObraSocial(id) {

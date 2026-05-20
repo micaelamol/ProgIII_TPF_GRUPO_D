@@ -32,8 +32,29 @@ const obtenerObraSocialPorId = async (req, res) => {
 // POST - Crear una
 const crearObraSocial = async (req, res) => {
     try {
-        const { nombre } = req.body;
-        const unaObraSocial = await ObrasSocialesServicio.crearObraSocial(nombre);
+        const { nombre, descripcion, porcentaje_descuento, es_particular, activo } = req.body;
+
+        if (!nombre) {
+            return res.status(400).json({ estado: false, msg: "El campo 'nombre' es obligatorio" });
+        }
+        if (isNaN(porcentaje_descuento)) {
+            return res.status(400).json({ estado: false, msg: "El campo 'porcentaje_descuento' debe ser numérico" });
+        }
+        if (![0,1].includes(Number(es_particular))) {
+            return res.status(400).json({ estado: false, msg: "El campo 'es_particular' debe ser 0 o 1" });
+        }
+        if (![0,1].includes(Number(activo))) {
+            return res.status(400).json({ estado: false, msg: "El campo 'activo' debe ser 0 o 1" });
+        }
+
+        const unaObraSocial = await ObrasSocialesServicio.crearObraSocial({
+            nombre,
+            descripcion,
+            porcentaje_descuento,
+            es_particular,
+            activo
+        });
+
         res.status(201).json({
             obraSocial: unaObraSocial,
             estado: true,
@@ -48,8 +69,16 @@ const crearObraSocial = async (req, res) => {
 const actualizarObraSocial = async (req, res) => {
     try {
         const { id_obra_social } = req.params;
-        const { nombre } = req.body;
-        const obraSocialActualizada = await ObrasSocialesServicio.actualizarObraSocial(id_obra_social, nombre);
+        const { nombre, descripcion, porcentaje_descuento, es_particular, activo } = req.body;
+
+        const obraSocialActualizada = await ObrasSocialesServicio.actualizarObraSocial(id_obra_social, {
+            nombre,
+            descripcion,
+            porcentaje_descuento,
+            es_particular,
+            activo
+        });
+
         res.status(200).json({
             obraSocial: obraSocialActualizada,
             estado: true,

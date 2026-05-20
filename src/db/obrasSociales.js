@@ -1,9 +1,7 @@
-import mysql from "mysql2/promise";
 import { connection } from "./connection.js";
 
 export class ObrasSociales {
   static async listarObrasSociales() {
-    // lista todas las obras sociales activas
     try {
       const sql = "SELECT * FROM obras_sociales WHERE activo = 1";
       const [rows] = await connection.query(sql);
@@ -23,18 +21,55 @@ export class ObrasSociales {
         error.status = 404;
         throw error;
       }
-      return rows;
+      return rows[0];
     } catch (error) {
       throw error;
     }
   }
 
-  static async crearObraSocial(nombre) {
+  static async crearObraSocial(obraSocial) {
     try {
-      const sql = "INSERT INTO obras_sociales (nombre) VALUES (?)";
-      const [result] = await connection.query(sql, [nombre]);
+      const sql = `
+        INSERT INTO obras_sociales 
+        (nombre, descripcion, porcentaje_descuento, es_particular, activo) 
+        VALUES (?, ?, ?, ?, ?)
+      `;
+      const [result] = await connection.query(sql, [
+        obraSocial.nombre,
+        obraSocial.descripcion,
+        obraSocial.porcentaje_descuento,
+        obraSocial.es_particular,
+        obraSocial.activo
+      ]);
 
-      return { id: result.insertId, nombre };
+      return { id_obra_social: result.insertId, ...obraSocial };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async actualizarObraSocial(id, obraSocial) {
+    try {
+      const sql = `
+        UPDATE obras_sociales 
+        SET nombre=?, descripcion=?, porcentaje_descuento=?, es_particular=?, activo=? 
+        WHERE id_obra_social=?
+      `;
+      const [result] = await connection.query(sql, [
+        obraSocial.nombre,
+        obraSocial.descripcion,
+        obraSocial.porcentaje_descuento,
+        obraSocial.es_particular,
+        obraSocial.activo,
+        id
+      ]);
+
+      if (result.affectedRows === 0) {
+        const error = new Error(`No se encontró la obra social con id ${id}`);
+        error.status = 404;
+        throw error;
+      }
+      return { id_obra_social: id, ...obraSocial };
     } catch (error) {
       throw error;
     }
@@ -44,29 +79,13 @@ export class ObrasSociales {
     try {
       const sql = "UPDATE obras_sociales SET activo = 0 WHERE id_obra_social = ?";
       const [result] = await connection.query(sql, [id]);
-      if (result.affectedRows === 0) {
-        const error = new Error(`No se encontró la obra social con id ${id}`);
-        error.status = 404;
-        throw error;
-      } else {
-        return { status: 200, message: `Obra social con id ${id} eliminada exitosamente` };
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
 
-  static async actualizarObraSocial(id, nombre) {
-    try {
-      const sql = "UPDATE obras_sociales SET nombre = ? WHERE id_obra_social = ?";
-      const [result] = await connection.query(sql, [nombre, id]);
       if (result.affectedRows === 0) {
         const error = new Error(`No se encontró la obra social con id ${id}`);
         error.status = 404;
         throw error;
-      } else {
-        return { status: 200, message: `Obra social con id ${id} actualizada exitosamente` };
       }
+      return { status: 200, message: `Obra social con id ${id} eliminada exitosamente` };
     } catch (error) {
       throw error;
     }
