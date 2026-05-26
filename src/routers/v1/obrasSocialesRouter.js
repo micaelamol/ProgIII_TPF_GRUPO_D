@@ -55,6 +55,7 @@ router.put(
             .isLength({ max: 120 }).withMessage("Máximo 120 caracteres."),
         check("descripcion")
             .optional()
+            .isString().withMessage("La descripción debe ser un texto.")
             .isLength({ max: 255 }).withMessage("Máximo 255 caracteres."),
         check("porcentaje_descuento")
             .notEmpty().withMessage("El porcentaje de descuento es obligatorio.")

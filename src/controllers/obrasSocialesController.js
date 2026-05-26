@@ -34,18 +34,18 @@ const crearObraSocial = async (req, res) => {
     try {
         const { nombre, descripcion, porcentaje_descuento, es_particular, activo } = req.body;
 
-        if (!nombre) {
-            return res.status(400).json({ estado: false, msg: "El campo 'nombre' es obligatorio" });
-        }
-        if (isNaN(porcentaje_descuento)) {
-            return res.status(400).json({ estado: false, msg: "El campo 'porcentaje_descuento' debe ser numérico" });
-        }
-        if (![0,1].includes(Number(es_particular))) {
-            return res.status(400).json({ estado: false, msg: "El campo 'es_particular' debe ser 0 o 1" });
-        }
-        if (![0,1].includes(Number(activo))) {
-            return res.status(400).json({ estado: false, msg: "El campo 'activo' debe ser 0 o 1" });
-        }
+        // if (!nombre) {
+        //     return res.status(400).json({ estado: false, msg: "El campo 'nombre' es obligatorio" });
+        // }
+        // if (isNaN(porcentaje_descuento)) {
+        //     return res.status(400).json({ estado: false, msg: "El campo 'porcentaje_descuento' debe ser numérico" });
+        // }
+        // if (![0,1].includes(Number(es_particular))) {
+        //     return res.status(400).json({ estado: false, msg: "El campo 'es_particular' debe ser 0 o 1" });
+        // }
+        // if (![0,1].includes(Number(activo))) {
+        //     return res.status(400).json({ estado: false, msg: "El campo 'activo' debe ser 0 o 1" });
+        // }
 
         const unaObraSocial = await ObrasSocialesServicio.crearObraSocial({
             nombre,

@@ -17,6 +17,15 @@ app.get("/", (req, res) => {
   res.json({ estado: "OK", msg: "Servidor funcionando" });
 });
 
+// Middleware para manejo de errores
+app.use((err,req, res,next) => {
+  //console.error(err.stack);
+  if(err.message.includes("Expected double-quoted")){
+    return res.status(400).json({ estado: false, msg: "Error de formato del json en la solicitud" });
+  }
+  res.status(500).json({ estado: false, msg: "Error interno del servidor" });
+});
+
 // Inicializar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
