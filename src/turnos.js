@@ -1,11 +1,24 @@
 import express from "express";
 import dotenv from "dotenv";
+import fs from "fs";
+import morgan from "morgan";
+
 import especialidadesRouter from "./routers/v1/especialidadesRouter.js";
 import obrasSocialesRouter from "./routers/v1/obrasSocialesRouter.js"; 
+
 
 dotenv.config();
 
 const app = express();
+
+let log = fs.createWriteStream('./accesos.log', { 
+    flags: 'a'
+});
+
+app.use(morgan('dev'));
+app.use(morgan('combined', {stream: log}));
+
+
 app.use(express.json());
 
 // Rutas
