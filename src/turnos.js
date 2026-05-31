@@ -3,8 +3,9 @@ import dotenv from "dotenv";
 import fs from "fs";
 import morgan from "morgan";
 
-import especialidadesRouter from "./routers/v1/especialidadesRouter.js";
-import obrasSocialesRouter from "./routers/v1/obrasSocialesRouter.js"; 
+import especialidadesRouter from "./routers/v1/especialidadesRutas.js";
+import obrasSocialesRouter from "./routers/v1/obrasSocialesRutas.js"; 
+import turnosReservasRouter from "./routers/v1/turnosReservasRutas.js";
 
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(express.json());
 // Rutas
 app.use("/api/v1/especialidades", especialidadesRouter);
 app.use("/api/v1/obras_sociales", obrasSocialesRouter); 
+app.use("/api/v1/turnos-reservas", turnosReservasRouter)
 
 // Ruta de prueba
 app.get("/", (req, res) => {
@@ -39,8 +41,4 @@ app.use((err,req, res,next) => {
   res.status(500).json({ estado: false, msg: "Error interno del servidor" });
 });
 
-// Inicializar servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor iniciado en http://localhost:${PORT}`);
-});
+export default app;
