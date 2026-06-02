@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import especialidadesRouter from "./routers/v1/especialidadesRouter.js";
-import obrasSocialesRouter from "./routers/v1/obrasSocialesRouter.js"; 
+import obrasSocialesRouter from "./routers/v1/obrasSocialesRouter.js";
+import medicosRouter from "./routers/v1/medicosRouter.js"; 
 
 dotenv.config();
 
@@ -10,7 +11,8 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/v1/especialidades", especialidadesRouter);
-app.use("/api/v1/obras_sociales", obrasSocialesRouter); 
+app.use("/api/v1/obras_sociales", obrasSocialesRouter);
+app.use("/api/v1/medicos", medicosRouter);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
