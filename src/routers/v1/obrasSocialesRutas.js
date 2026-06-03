@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check, param } from "express-validator";
-import { ObrasSocialesController } from "../../controllers/obrasSocialesController.js";
+import { ObrasSocialesController } from "../../controllers/obrasSocialesControlador.js";
 import { validarCampos } from "../../middlewares/validarCampos.js";
 
 const router = Router();
