@@ -1,6 +1,6 @@
 import TurnosReservas from "../db/turnosReservas.js";
 import MedicosServicio from "../services/medicosServicio.js";
-import PacientesServicio from "../servicess/pacientesServicio.js";
+import PacientesServicio from "../services/pacientesServicio.js";
 import ObrasSocialesServicio from "../services/obrasSocialesServicio.js";
 
 export default class TurnosReservasServicio {

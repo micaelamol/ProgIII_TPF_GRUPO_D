@@ -8,7 +8,7 @@
   "main": "src/turnos.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/turnos.js"
+    "dev": "node --watch src/servidor.js"
   },
   "dependencies": {
     "apicache": "^1.6.3",
