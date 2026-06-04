@@ -7,7 +7,8 @@ import especialidadesRouter from "./routers/v1/especialidadesRutas.js";
 import obrasSocialesRouter from "./routers/v1/obrasSocialesRutas.js"; 
 import turnosReservasRouter from "./routers/v1/turnosReservasRutas.js";
 import medicosRouter from "./routers/v1/medicosRouter.js"; 
-import pacientesRouter from "./routers/v1/pacientesRutas.js"
+import pacientesRouter from "./routers/v1/pacientesRutas.js";
+import usuariosRouter from "./routers/v1/usuariosRutas.js"
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/api/v1/obras_sociales", obrasSocialesRouter);
 app.use("/api/v1/turnos-reservas", turnosReservasRouter);
 app.use("/api/v1/medicos", medicosRouter);
 app.use("/api/v1/pacientes", pacientesRouter);
+app.use("/api/v1/usuarios",usuariosRouter);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
