@@ -8,7 +8,7 @@ export default class TurnosReservasControlador {
 
     crear = async (req, res) => {
         try{            
-            const turnoReserva = req.dto;
+            const turnoReserva = req.body;
 
             const nuevoTurnoReserva = await this.turnosReservas.crear(turnoReserva);
             
@@ -35,4 +35,14 @@ export default class TurnosReservasControlador {
             );
         }
     }
+
+    buscarTodos = async (req, res) => {
+    try {
+        const turnos = await this.turnosReservas.buscarTodas();
+        res.status(200).json({ estado: true, mensaje: 'Turnos encontrados.', turnos });
+    } catch(error) {
+        console.log(`Error en GET /turnos ${error}`);
+        res.status(500).json({ estado: false, mensaje: 'Error interno' });
+    }
+}
 }

@@ -2,13 +2,11 @@ import express  from 'express';
 import { check, param } from 'express-validator';
 import { validarCampos } from '../../middlewares/validarCampos.js';
 
-import TransformarDTO from '../../middlewares/dtoMiddleware.js';
 import TurnosReservasControlador from '../../controllers/turnosReservasControlador.js';
 
 const router = express.Router();
 
 const turnosReservasControlador = new TurnosReservasControlador();
-const transformarDTO = new TransformarDTO();
 
 router.post('/', 
     [
@@ -20,8 +18,10 @@ router.post('/',
             .notEmpty().withMessage('La fecha_hora es obligatorio.'),
         validarCampos
     ], 
-    transformarDTO.turnosReservasCrearDTO,
     turnosReservasControlador.crear);
+
+
+    router.get('/', turnosReservasControlador.buscarTodos);
 
 
 export default router;
