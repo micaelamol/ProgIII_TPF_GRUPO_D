@@ -7,38 +7,51 @@ export default class TurnosReservasServicio {
 
     constructor() {
         this.turnosReservas = new TurnosReservas();
-        // this.medicos = new MedicosServicio();
+        this.medicos = new MedicosServicio();
         this.pacientes = new PacientesServicio();
         this.obrasSociales = new ObrasSocialesServicio();
     }
 
-    // buscarTodas = async () => {}
-
     // buscarPorId = async (idTurnoReserva) => {}
 
-    // modificar = async () => {}
 
     crear = async (turnoReserva) => {
-        const medico = await MedicosServicio.obtenerMedicoPorId(turnoReserva.id_medico);
+        const medico = await this.medicos.obtenerMedicoPorId(turnoReserva.id_medico);
         const paciente = await this.pacientes.buscarPorId(turnoReserva.id_paciente);
-
-        const obra_social = await ObrasSocialesServicio.obtenerObraSocialPorId(paciente.id_obra_social);
+        const obra_social = await this.obrasSociales.obtenerObraSocialPorId(paciente.id_obra_social);
 
         let valor = medico.valor_consulta;
 
         if (obra_social.es_particular === 0) {
-            valor = valor - (obra_social.porcentaje_descuento/100 * valor);
+            valor = valor - (obra_social.porcentaje_descuento / 100 * valor);
         }
 
         turnoReserva.valor_total = valor;
         turnoReserva.id_obra_social = paciente.id_obra_social;
 
-        const id_nuevo = await this.turnosReservas.crear(turnoReserva);
-        return id_nuevo;
+        const id = await this.turnosReservas.crear(turnoReserva);
+        return id;
     }
 
-    buscarTodas = async () => {
-    return this.turnosReservas.buscarTodos();
+    // Agregar if/else para validar el rol
+    buscarTodas = async (usuario) => {
+
+        // medico
+        if (usuario.rol === 1) {
+            return this.turnosReservas.turnosDeUnMedico(usuario.id_usuario);
+        }
+        // Paciente
+        else {
+            return this.turnosReservas.turnosDeUnPaciente(usuario.id_usuario);
+        }
+    }
+
+    modificar = async (id) => {
+        const resultado = await this.turnosReservas.marcarAtendido(id);
+        if (resultado === 0) {
+            throw new Error('Turno no encontrado');
+        }
+        return resultado;
 }
 
 }

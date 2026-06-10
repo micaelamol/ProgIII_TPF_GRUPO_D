@@ -20,8 +20,10 @@ router.post('/',
     ], 
     turnosReservasControlador.crear);
 
-
+// Agregar autenticacion aca segun el rol
     router.get('/', turnosReservasControlador.buscarTodos);
+
+    router.patch('/:id', turnosReservasControlador.marcarAtendido);
 
 
 export default router;

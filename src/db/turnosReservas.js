@@ -14,8 +14,33 @@ export default class TurnosReservas {
     }
 
     buscarTodos = async () => {
-    const sql = `SELECT * FROM turnos_reservas WHERE activo = 1`;
-    const [turnos] = await connection.execute(sql);
-    return turnos;
+        const sql = `SELECT * FROM turnos_reservas WHERE activo = 1`;
+        const [turnos] = await connection.execute(sql);
+        return turnos;
+    }
+
+    turnosDeUnMedico = async (id_usuario) => {
+        const sql = `SELECT tr.fecha_hora, tr.valor_total
+                    FROM usuarios AS u
+                    INNER JOIN medicos AS m ON m.id_usuario = u.id_usuario
+                    INNER JOIN turnos_reservas AS tr ON tr.id_medico = m.id_medico
+                    WHERE u.id_usuario = ?;`
+        const [turnos] = await connection.execute(sql, [id_usuario]);
+        return turnos;
+    }
+    turnosDeUnPaciente = async (id_usuario) => {
+        const sql = `SELECT tr.fecha_hora, tr.valor_total
+                        FROM usuarios as u
+                        INNER JOIN pacientes AS p ON p.id_usuario = u.id_usuario
+                        INNER JOIN turnos_reservas AS tr ON tr.id_paciente = p.id_paciente
+                        WHERE u.id_usuario = ?`
+        const [turnos] = await connection.execute(sql, [id_usuario]);
+        return turnos;
+    }
+
+    marcarAtendido = async (id) => {
+        const sql = `UPDATE turnos_reservas SET atendido = 1 WHERE id_turno_reserva = ?`;
+        const [result] = await connection.execute(sql, [id]);
+        return result.affectedRows;
 }
 }
