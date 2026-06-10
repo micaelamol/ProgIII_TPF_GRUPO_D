@@ -6,7 +6,7 @@ import morgan from "morgan";
 import especialidadesRouter from "./routers/v1/especialidadesRutas.js";
 import obrasSocialesRouter from "./routers/v1/obrasSocialesRutas.js"; 
 import turnosReservasRouter from "./routers/v1/turnosReservasRutas.js";
-import medicosRouter from "./routers/v1/medicosRouter.js"; 
+import medicosRouter from "./routers/v1/medicosRutas.js"; 
 import pacientesRouter from "./routers/v1/pacientesRutas.js";
 import usuariosRouter from "./routers/v1/usuariosRutas.js"
 
