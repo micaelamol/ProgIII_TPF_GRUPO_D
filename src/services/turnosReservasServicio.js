@@ -7,18 +7,12 @@ export default class TurnosReservasServicio {
 
     constructor() {
         this.turnosReservas = new TurnosReservas();
-        this.medicos = new MedicosServicio();
-        this.pacientes = new PacientesServicio();
-        this.obrasSociales = new ObrasSocialesServicio();
     }
 
-    // buscarPorId = async (idTurnoReserva) => {}
-
-
     crear = async (turnoReserva) => {
-        const medico = await this.medicos.obtenerMedicoPorId(turnoReserva.id_medico);
-        const paciente = await this.pacientes.buscarPorId(turnoReserva.id_paciente);
-        const obra_social = await this.obrasSociales.obtenerObraSocialPorId(paciente.id_obra_social);
+        const medico = await MedicosServicio.obtenerMedicoPorId(turnoReserva.id_medico);
+        const paciente = await PacientesServicio.obtenerPacientePorId(turnoReserva.id_paciente);
+        const obra_social = await ObrasSocialesServicio.obtenerObraSocialPorId(paciente.id_obra_social);
 
         let valor = medico.valor_consulta;
 
@@ -33,15 +27,10 @@ export default class TurnosReservasServicio {
         return id;
     }
 
-    // Agregar if/else para validar el rol
     buscarTodas = async (usuario) => {
-
-        // medico
         if (usuario.rol === 1) {
             return this.turnosReservas.turnosDeUnMedico(usuario.id_usuario);
-        }
-        // Paciente
-        else {
+        } else {
             return this.turnosReservas.turnosDeUnPaciente(usuario.id_usuario);
         }
     }
@@ -52,6 +41,5 @@ export default class TurnosReservasServicio {
             throw new Error('Turno no encontrado');
         }
         return resultado;
-}
-
+    }
 }
