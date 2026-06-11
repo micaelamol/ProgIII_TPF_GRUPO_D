@@ -3,12 +3,17 @@ import dotenv from "dotenv";
 import fs from "fs";
 import morgan from "morgan";
 
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
+
+import loginRouter from "./routers/v1/loginRutas.js";
 import especialidadesRouter from "./routers/v1/especialidadesRutas.js";
 import obrasSocialesRouter from "./routers/v1/obrasSocialesRutas.js"; 
 import turnosReservasRouter from "./routers/v1/turnosReservasRutas.js";
 import medicosRouter from "./routers/v1/medicosRutas.js"; 
 import pacientesRouter from "./routers/v1/pacientesRutas.js";
 import usuariosRouter from "./routers/v1/usuariosRutas.js"
+import { autentication } from "./middlewares/autentication.js";
 
 dotenv.config();
 
@@ -23,7 +28,15 @@ app.use(morgan('combined', {stream: log}));
 
 app.use(express.json());
 
+//autenticacion con JWT
+//middleware para verificar el token JWT en cada solicitud, extraer los datos del usuario autenticado y almacenarlos en req.session para su uso en las rutas protegidas
+app.use(cookieParser());
+app.use(autentication);
+
+
+
 // Config rutas
+app.use("/api/v1/auth/", loginRouter);
 app.use("/api/v1/especialidades", especialidadesRouter);
 app.use("/api/v1/obras_sociales", obrasSocialesRouter); 
 app.use("/api/v1/turnos-reservas", turnosReservasRouter);
@@ -42,7 +55,7 @@ app.use((err, req, res, next) => {
   if(err.message.includes("Expected double-quoted")){
     return res.status(400).json({ estado: false, msg: "Error de formato del json en la solicitud" });
   }
-  res.status(500).json({ estado: false, msg: "Error interno del servidor" });
+  res.status(500).json({ estado: false, msg: "Error interno del servidor" ,error: err.message});
 });
 
 export default app;
