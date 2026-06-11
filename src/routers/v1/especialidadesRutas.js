@@ -14,7 +14,7 @@ router.get(
 
 // GET — una especialidad por ID
 router.get(
-    "/:id_especialidad",autorizarUsuarios([1,2]),
+    "/:id_especialidad",autorizarUsuarios([1,2,3]),
     [
         param("id_especialidad", "El ID debe ser un número entero").isInt(),
         validarCampos
@@ -30,7 +30,7 @@ router.post(
             .notEmpty().withMessage("El nombre es obligatorio.")
             .isLength({ max: 120 }).withMessage("Máximo 120 caracteres."),
         validarCampos
-    ],autorizarUsuarios([1,2]),
+    ],autorizarUsuarios([1,2,3]),
     EspecialidadesController.crearEspecialidad
 );
 
