@@ -24,7 +24,7 @@ export default class TurnosReservas {
                     FROM usuarios AS u
                     INNER JOIN medicos AS m ON m.id_usuario = u.id_usuario
                     INNER JOIN turnos_reservas AS tr ON tr.id_medico = m.id_medico
-                    WHERE u.id_usuario = ?;`
+                    WHERE u.id_usuario = ? AND tr.activo = 1;`
         const [turnos] = await connection.execute(sql, [id_usuario]);
         return turnos;
     }
@@ -33,7 +33,7 @@ export default class TurnosReservas {
                         FROM usuarios as u
                         INNER JOIN pacientes AS p ON p.id_usuario = u.id_usuario
                         INNER JOIN turnos_reservas AS tr ON tr.id_paciente = p.id_paciente
-                        WHERE u.id_usuario = ?`
+                        WHERE u.id_usuario = ? AND tr.activo = 1`
         const [turnos] = await connection.execute(sql, [id_usuario]);
         return turnos;
     }
@@ -42,5 +42,11 @@ export default class TurnosReservas {
         const sql = `UPDATE turnos_reservas SET atendido = 1 WHERE id_turno_reserva = ?`;
         const [result] = await connection.execute(sql, [id]);
         return result.affectedRows;
-}
+    }
+
+    eliminarTurno = async (id) => {
+        const sql = `UPDATE turnos_reservas SET activo = 0 WHERE id_turno_reserva = ?`;
+        const [result] = await connection.execute(sql, [id]);
+        return result.affectedRows;
+    }
 }

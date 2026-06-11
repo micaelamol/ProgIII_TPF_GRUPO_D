@@ -35,10 +35,18 @@ export default class TurnosReservasServicio {
         }
     }
 
-    modificar = async (id) => {
+    marcarTurnoAtendido = async (id) => {
         const resultado = await this.turnosReservas.marcarAtendido(id);
         if (resultado === 0) {
-            throw new Error('Turno no encontrado');
+            throw { status: 404, message: 'Turno no encontrado' };
+        }
+        return resultado;
+    }
+
+    eliminarTurno = async (id) => {
+        const resultado = await this.turnosReservas.eliminarTurno(id);
+        if (resultado === 0) {
+            throw { status: 404, message: 'Turno no encontrado.' };
         }
         return resultado;
     }
