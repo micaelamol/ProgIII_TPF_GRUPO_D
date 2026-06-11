@@ -8,7 +8,7 @@ const router = Router();
 
 // GET de todas las especialidades
 router.get(
-    "/",autorizarUsuarios([1,2]),
+    "/",autorizarUsuarios([1,2,3]),
     EspecialidadesController.obtenerEspecialidades
 );
 
