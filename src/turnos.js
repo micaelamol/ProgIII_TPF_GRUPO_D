@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import fs from "fs";
 import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+import cors from "cors";
 
 import especialidadesRouter from "./routers/v1/especialidadesRutas.js";
 import obrasSocialesRouter from "./routers/v1/obrasSocialesRutas.js"; 
@@ -18,6 +21,8 @@ let log = fs.createWriteStream('./accesos.log', {
     flags: 'a'
 });
 
+
+app.use(cors());
 app.use(morgan('dev'));
 app.use(morgan('combined', {stream: log}));
 
@@ -46,3 +51,21 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
+
+// Opciones de Swagger
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API Turnos Médicos",
+      version: "1.0.0",
+      description: "Documentación de la API de turnos médicos"
+    }
+  },
+  apis: ["./src/routers/v1/*.js"] // ajustá la ruta según donde tengas tus archivos de rutas
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Montar Swagger en /docs
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
