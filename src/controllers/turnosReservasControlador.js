@@ -38,7 +38,7 @@ export default class TurnosReservasControlador {
 
     buscarTodos = async (req, res) => {
         try {
-            const usuario = req.usuario;
+            const usuario = req.user;
 
             if (!usuario) {
                 return res.status(401).json({ estado: false, mensaje: 'No autorizado' });
@@ -76,6 +76,16 @@ export default class TurnosReservasControlador {
             }
             console.log(`Error en DELETE /turnos-reservas ${error}`);
             res.status(500).json({ estado: false, mensaje: 'Error interno' });
+        }
+    }
+
+    obtenerEstadisticas = async (req, res) => {
+        try {
+            const estadisticas = await this.turnosReservas.obtenerEstadisticas();
+            res.status(200).json({ estado: true, datos: estadisticas });
+        } catch (error) {
+            console.log(`Error en GET /turnos-reservas/estadisticas ${error}`);
+            res.status(500).json({ estado: false, mensaje: 'Error interno.' });
         }
     }
 }

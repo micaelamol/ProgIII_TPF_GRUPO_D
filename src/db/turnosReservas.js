@@ -49,4 +49,9 @@ export default class TurnosReservas {
         const [result] = await connection.execute(sql, [id]);
         return result.affectedRows;
     }
+
+    obtenerEstadisticas = async () => {
+        const [result] = await connection.execute('CALL sp_estadisticas_turnos()');
+        return result[0];
+}
 }

@@ -18,6 +18,7 @@ export default class TurnosReservasServicio {
 
         if (obra_social.es_particular === 0) {
             valor = valor - (obra_social.porcentaje_descuento / 100 * valor);
+
         }
 
         turnoReserva.valor_total = valor;
@@ -30,8 +31,11 @@ export default class TurnosReservasServicio {
     buscarTodas = async (usuario) => {
         if (usuario.rol === 1) {
             return this.turnosReservas.turnosDeUnMedico(usuario.id_usuario);
-        } else {
+        } else if (usuario.rol === 2) {
             return this.turnosReservas.turnosDeUnPaciente(usuario.id_usuario);
+        } else {
+            // admin
+            return this.turnosReservas.buscarTodos();
         }
     }
 
@@ -49,5 +53,9 @@ export default class TurnosReservasServicio {
             throw { status: 404, message: 'Turno no encontrado.' };
         }
         return resultado;
+    }
+
+    obtenerEstadisticas = async () => {
+        return this.turnosReservas.obtenerEstadisticas();
     }
 }
