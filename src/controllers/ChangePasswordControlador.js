@@ -10,7 +10,7 @@ export class changePasswordController {
   constructor() {
     //console.log("ChangePasswordController initialized");
   }
-//funcion para solicitar el cambio de contraseña, recibe un email, verifica si existe en la base de datos, genera un token JWT con el id_usuario y el email como payload, lo guarda en Redis con una expiración de 15 minutos y devuelve el token en la respuesta
+
   async forgotPassword(req, res) {
     try {
       console.log("Forgot password endpoint hit");
@@ -56,23 +56,23 @@ export class changePasswordController {
 
   async resetPassword(req, res) {
     try {
-      //console.log("ruta para Reset password");
+      console.log("Reset password endpoint hit");
       const { token, newPassword } = req.body;
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      //console.log("Decoded token:", decoded);
+      console.log("Decoded token:", decoded);
 
       const client = createClient({
         url: "redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527",
       });
       await client.connect();
       const storedToken = await client.get(`reset_token:${decoded.id_usuario}`);
-      
+      //await client.quit();
       if (storedToken !== token) {
         return res
           .status(400)
           .json({ status: false, message: "Token inválido o expirado." });
       }
-      // lógica para actualizar la contraseña del usuario en la base de datos
+      // Aquí iría la lógica para actualizar la contraseña del usuario en la base de datos
       const usuario = await UsuariosServicio.obtenerUsuarioPorId(
         decoded.id_usuario,
       );
@@ -81,7 +81,6 @@ export class changePasswordController {
           .status(404)
           .json({ status: false, message: "Usuario no encontrado." });
       }
-      // se guarda en el usuario la contraseña encriptada 
       usuario.contrasenia = crypto
         .createHash("sha256")
         .update(newPassword)
@@ -89,14 +88,13 @@ export class changePasswordController {
       delete usuario.id_usuario;
 
       await UsuariosServicio.actualizarUsuario(decoded.id_usuario, usuario);
-      // elimino el token de redis despues de utilizarla
       await client.del(`reset_token:${decoded.id_usuario}`);
       await client.quit();
       return res
         .status(201)
         .json({ status: true, message: "Contraseña restablecida con éxito." });
     } catch (error) {
-      //console.error("Error in resetPassword:", error);
+      console.error("Error in resetPassword:", error);
       res
         .status(500)
         .json({ message: "Error procesando el reset de la contraseña." });
