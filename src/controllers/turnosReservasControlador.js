@@ -38,7 +38,7 @@ export default class TurnosReservasControlador {
 
     buscarTodos = async (req, res) => {
         try {
-            const usuario = req.usuario;
+            const usuario = req.user;
 
             if (!usuario) {
                 return res.status(401).json({ estado: false, mensaje: 'No autorizado' });
