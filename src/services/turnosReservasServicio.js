@@ -50,4 +50,8 @@ export default class TurnosReservasServicio {
         }
         return resultado;
     }
+
+    obtenerEstadisticas = async () => {
+        return this.turnosReservas.obtenerEstadisticas();
+}
 }

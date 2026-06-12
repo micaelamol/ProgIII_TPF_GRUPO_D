@@ -24,6 +24,7 @@ router.post('/',
     ],
     turnosReservasControlador.crear);
 
+router.get('/estadisticas', turnosReservasControlador.obtenerEstadisticas);
 
 router.get('/', turnosReservasControlador.buscarTodos);
 
