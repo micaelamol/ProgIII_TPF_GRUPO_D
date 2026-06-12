@@ -4,13 +4,29 @@ export default class TurnosReservas {
 
     crear = async (turnoReserva) => {
         const { id_medico, id_paciente, id_obra_social, fecha_hora, valor_total } = turnoReserva;
-        const sql = `INSERT INTO turnos_reservas (id_medico, id_paciente, id_obra_social, fecha_hora, valor_total)
+
+        const conn = await connection.getConnection();
+
+        try {
+            await conn.beginTransaction();
+
+            const sql = `INSERT INTO turnos_reservas (id_medico, id_paciente, id_obra_social, fecha_hora, valor_total)
             VALUES (?,?,?,?,?)`;
-        const [result] = await connection.execute(sql, [id_medico, id_paciente, id_obra_social, fecha_hora, valor_total]);
-        if (result.affectedRows === 0) {
-            return null;
+            const [result] = await conn.execute(sql, [id_medico, id_paciente, id_obra_social, fecha_hora, valor_total]);
+
+            await conn.commit();
+
+            if (result.affectedRows === 0) {
+                return null;
+            }
+            return result.insertId;
+
+        } catch (error) {
+            await conn.rollback();
+            throw error;
+        } finally {
+            conn.release();
         }
-        return result.insertId;
     }
 
     buscarTodos = async () => {
@@ -53,5 +69,10 @@ export default class TurnosReservas {
     obtenerEstadisticas = async () => {
         const [result] = await connection.execute('CALL sp_estadisticas_turnos()');
         return result[0];
+    }
+
+    obtenerEstadisticasPorEspecialidad = async () => {
+    const [result] = await connection.execute('CALL sp_estadisticas_por_especialidad()');
+    return result[0];
 }
 }

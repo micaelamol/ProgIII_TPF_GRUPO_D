@@ -73,7 +73,21 @@ const swaggerOptions = {
       title: "API Turnos Médicos",
       version: "1.0.0",
       description: "Documentación de la API de turnos médicos"
-    }
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT"
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ]
   },
   apis: ["./src/routers/v1/*.js"] // ajustá la ruta según donde tengas tus archivos de rutas
 };
