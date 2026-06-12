@@ -8,6 +8,28 @@ const router = express.Router();
 
 const turnosReservasControlador = new TurnosReservasControlador();
 
+///// AGREGU//////////////
+/**
+ * @swagger
+ * /api/v1/turnos-reservas/por-especialidad:
+ *   get:
+ *     summary: Generar informe PDF de turnos por especialidad
+ *     description: Solo admin (3). Devuelve un PDF con estadísticas agrupadas por especialidad.
+ *     responses:
+ *       200:
+ *         description: PDF generado correctamente
+ *       403:
+ *         description: Sin permisos
+ *       500:
+ *         description: Error interno
+ */
+//router.get('/por-especialidad', autorizarUsuarios([3]), turnosReservasControlador.porEspecialidad);
+router.get('/por-especialidad', turnosReservasControlador.porEspecialidad);
+
+///////////////////////
+
+
+
 /**
  * @swagger
  * /api/v1/turnos-reservas:

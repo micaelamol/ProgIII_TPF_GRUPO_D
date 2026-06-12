@@ -28,6 +28,29 @@ export default class TurnosReservasServicio {
         return id;
     }
 
+   ///// ESTO AGREGUE
+    //  NUEVO MÉTODO: genera informe PDF por especialidad
+    porEspecialidad = async () => {
+        // 1. Buscar datos desde el procedimiento almacenado
+        const datos = await this.turnosReservas.porEspecialidad();
+
+        // 2. Generar PDF con esos datos
+        const pdf = await this.informes.reportePorEspecialidades(datos);
+
+        // 3. Devolver buffer y headers para que el navegador lo muestre
+        return {
+            buffer: pdf,
+            headers: {
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': 'inline; filename="reporte.pdf"'
+            }
+        };
+    }
+//////////////////////////////////////////////////
+
+
+
+
     buscarTodas = async (usuario) => {
         if (usuario.rol === 1) {
             return this.turnosReservas.turnosDeUnMedico(usuario.id_usuario);

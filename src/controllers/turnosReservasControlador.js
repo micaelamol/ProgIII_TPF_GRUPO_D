@@ -35,6 +35,30 @@ export default class TurnosReservasControlador {
             res.status(500).json({ estado: false, mensaje: 'Error interno' });
         }
     }
+ ////////////////////////////////
+ ////AGREGUE
+    porEspecialidad = async (req, res) => {
+        try {
+            // Llamo al servicio que genera el PDF
+            const { buffer, headers } = await this.turnosReservas.porEspecialidad();
+
+            // SET CABECERA DE LA RESPUESTA
+            res.set(headers);
+
+            // RETORNO EL BUFFER NO DATOS JSON
+            res.status(200).end(buffer);
+
+        } catch (error) {
+            console.log(`Error en GET /turnos-reservas/por-especialidad ${error}`);
+            res.status(500).json({
+                estado: false,
+                mensaje: "Error interno"
+            });
+        }
+    }
+}
+/////////////////////////////////
+
 
     buscarTodos = async (req, res) => {
         try {
