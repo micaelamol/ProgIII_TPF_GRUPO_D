@@ -9,8 +9,8 @@ export function autentication (req,res,next) {
   if (token) {
     //console.log("Verificando el token JWT... ", token);
     const datos = jwt.verify(token, process.env.SECRET_KEY);
-    console.log("Datos decodificados del token JWT: ", datos);
-    req.user = {id_usuario: datos.payload.id_usuario, usuario: datos.payload.usuario, rol: datos.payload.rol};
+    
+    req.user = {id_usuario: datos.id_usuario, usuario: datos.usuario, rol: datos.rol};
     
   }
  }catch(error){
