@@ -88,4 +88,14 @@ export default class TurnosReservasControlador {
             res.status(500).json({ estado: false, mensaje: 'Error interno.' });
         }
     }
+
+    obtenerEstadisticasPorEspecialidad = async (req, res) => {
+    try {
+        const estadisticas = await this.turnosReservas.obtenerEstadisticasPorEspecialidad();
+        res.status(200).json({ estado: true, datos: estadisticas });
+    } catch (error) {
+        console.log(`Error en GET /turnos-reservas/estadisticas-especialidad ${error}`);
+        res.status(500).json({ estado: false, mensaje: 'Error interno.' });
+    }
+}
 }

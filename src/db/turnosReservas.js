@@ -70,4 +70,9 @@ export default class TurnosReservas {
         const [result] = await connection.execute('CALL sp_estadisticas_turnos()');
         return result[0];
     }
+
+    obtenerEstadisticasPorEspecialidad = async () => {
+    const [result] = await connection.execute('CALL sp_estadisticas_por_especialidad()');
+    return result[0];
+}
 }

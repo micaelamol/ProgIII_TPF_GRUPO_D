@@ -68,6 +68,20 @@ router.get('/estadisticas', autorizarUsuarios([3]), turnosReservasControlador.ob
 
 /**
  * @swagger
+ * /api/v1/turnos-reservas/estadisticas-especialidad:
+ *   get:
+ *     summary: Obtener estadísticas de turnos por especialidad
+ *     description: Solo admin (3). Ejecuta un stored procedure.
+ *     responses:
+ *       200:
+ *         description: Estadísticas por especialidad obtenidas
+ *       403:
+ *         description: Sin permisos
+ */
+router.get('/estadisticas-especialidad', autorizarUsuarios([3]), turnosReservasControlador.obtenerEstadisticasPorEspecialidad);
+
+/**
+ * @swagger
  * /api/v1/turnos-reservas:
  *   get:
  *     summary: Listar turnos del usuario logueado
