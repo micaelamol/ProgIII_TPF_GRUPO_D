@@ -13,6 +13,7 @@ const turnosReservasControlador = new TurnosReservasControlador();
  * /api/v1/turnos-reservas:
  *   post:
  *     summary: Crear un turno
+ *     description: Solo paciente (2) y admin (3)
  *     requestBody:
  *       required: true
  *       content:
@@ -70,7 +71,7 @@ router.get('/estadisticas', autorizarUsuarios([3]), turnosReservasControlador.ob
  * /api/v1/turnos-reservas:
  *   get:
  *     summary: Listar turnos del usuario logueado
- *     description: Médico ve sus turnos, paciente los suyos, admin ve todos
+ *     description: Médico ve sus turnos (1), paciente los suyos (2), admin ve todos (3)
  *     responses:
  *       200:
  *         description: Lista de turnos
