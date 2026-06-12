@@ -1,4 +1,5 @@
 #esta linea es un comentario
 /node_modules
 .env
+accesos.log
 
