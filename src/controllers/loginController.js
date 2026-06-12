@@ -42,15 +42,15 @@ export class LoginController {
           .json({ estado: false, message: "Credenciales inválidas" });
       } else {
         // Genera un token JWT con el email del usuario como payload y una clave secreta, con una expiración de 1 hora
-        const payload = { id_usuario: usuarioEncontrado.id_usuario, usuario: usuarioEncontrado.nombres + ' ' + usuarioEncontrado.apellido, rol: usuarioEncontrado.rol };
+        const payload = {
+          id_usuario: usuarioEncontrado.id_usuario,
+          usuario: usuarioEncontrado.nombres + " " + usuarioEncontrado.apellido,
+          rol: usuarioEncontrado.rol,
+        };
         console.log("Payload del token JWT: ", payload);
-        const token = jwt.sign(
-          { payload },
-          process.env.SECRET_KEY,
-          {
-            expiresIn: "1h",
-          },
-        );
+        const token = jwt.sign(payload, process.env.SECRET_KEY, {
+          expiresIn: "1h",
+        });
         // Elimina la contraseña del objeto de usuario antes de enviarlo en la respuesta
         usuarioEncontrado.contrasenia = "";
         // Envía el token JWT en una cookie segura y devuelve un JSON con el resultado exitoso y los datos del usuario
@@ -62,13 +62,11 @@ export class LoginController {
             maxAge: 3600000,
           })
           .status(200)
-          .json({ estado: true, message: "Inicio de sesion exitoso" });;
+          .json({ estado: true, message: "Inicio de sesion exitoso" });
       }
     } catch (error) {
       console.error("Error en el login: ", error);
       res.status(500).send(error.message);
     }
-
   }
 }
-
