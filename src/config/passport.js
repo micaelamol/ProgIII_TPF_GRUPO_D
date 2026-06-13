@@ -4,7 +4,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import UsuariosServicio from "../services/usuariosServicio.js";
 
 
-// Estrategia LOCAL login con email y contraseña
+// login con email y contraseña
 const estrategia = new LocalStrategy(
   {
     usernameField: "email",       // campo del body que representa el usuario
@@ -30,7 +30,7 @@ const estrategia = new LocalStrategy(
 const validacion = new JwtStrategy(
   {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), 
-    secretOrKey: process.env.SECRET_KEY,                      // clave secreta definida en tu .env
+    secretOrKey: process.env.SECRET_KEY,                      // clave secreta definida en .env
   },
   async (jwtPayload, done) => {
     try {

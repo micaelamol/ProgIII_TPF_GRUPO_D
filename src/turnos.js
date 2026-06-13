@@ -49,7 +49,7 @@ app.use(morgan('combined', {stream: log}));
 app.use(express.json());
 
 //autenticacion con JWT
-//middleware para verificar el token JWT en cada solicitud, extraer los datos del usuario autenticado y almacenarlos 
+//middleware para verificar el token JWT en cada solicitud
 app.use(cookieParser());
 app.use(autentication);
 
