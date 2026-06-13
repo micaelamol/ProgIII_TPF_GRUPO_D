@@ -1,5 +1,5 @@
 import { MedicosBD } from "../db/medicos.js";
-import { Usuarios } from "../db/usuarios.js"; 
+import { Usuarios } from "../db/usuarios.js";
 
 export default class MedicosServicio {
     static async obtenerMedicos() {
@@ -17,7 +17,7 @@ export default class MedicosServicio {
     // --- CREAR MEDICO ---
     static async crearMedico(data) {
         // 1. verificacion de que el usuario existe
-        const usuarioExiste = await Usuarios.obtenerUsuarioPorId(data.id_usuario);
+        const usuarioExiste = await Usuarios.listarUsuarioPorId(data.id_usuario);
         if (!usuarioExiste) {
             throw { status: 404, message: "El ID de usuario ingresado no existe en la base de datos." };
         }
