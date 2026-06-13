@@ -33,6 +33,7 @@ npm run dev
 
 Crear un archivo `.env` en la raíz del proyecto:
 
+```
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=tu_usuario_mysql
@@ -40,8 +41,7 @@ DB_PASSWORD=tu_contraseña
 DB_NAME=prog3_turnos
 PORT=3000
 SECRET_KEY=una_clave_secreta_larga
-
----
+```
 
 ## 📖 Documentación
 
@@ -90,6 +90,7 @@ POST /api/v1/auth/reset
 
 ## 📁 Estructura del proyecto
 
+```
 src/
 ├── controllers/
 ├── db/
@@ -99,3 +100,4 @@ src/
 ├── utiles/handlebars/
 ├── servidor.js
 └── turnos.js
+```
