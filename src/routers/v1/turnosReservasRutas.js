@@ -10,8 +10,16 @@ const turnosReservasControlador = new TurnosReservasControlador();
 
 /**
  * @swagger
+ * tags:
+ *   name: Turnos-Reservas
+ *   description: Endpoints para gestionar turnos y reservas
+ */
+
+/**
+ * @swagger
  * /api/v1/turnos-reservas:
  *   post:
+ *     tags: [Turnos-Reservas]
  *     summary: Crear un turno
  *     description: Solo paciente (2) y admin (3)
  *     requestBody:
@@ -55,6 +63,7 @@ router.post('/', autorizarUsuarios([2, 3]),
 * @swagger
 * /api/v1/turnos-reservas/estadisticas:
 *   get:
+*     tags: [Turnos-Reservas]
 *     summary: Obtener estadísticas de turnos
 *     description: Solo admin (3). Ejecuta un stored procedure.
 *     responses:
@@ -84,6 +93,7 @@ router.get('/estadisticas-especialidad', autorizarUsuarios([3]), turnosReservasC
  * @swagger
  * /api/v1/turnos-reservas:
  *   get:
+ *     tags: [Turnos-Reservas]
  *     summary: Listar turnos del usuario logueado
  *     description: Médico ve sus turnos (1), paciente los suyos (2), admin ve todos (3)
  *     responses:
@@ -99,6 +109,7 @@ router.get('/', autorizarUsuarios([1, 2, 3]), turnosReservasControlador.buscarTo
  * @swagger
  * /api/v1/turnos-reservas/{id}:
  *   patch:
+ *     tags: [Turnos-Reservas]
  *     summary: Marcar un turno como atendido
  *     description: Solo médico (1)
  *     parameters:
@@ -127,6 +138,7 @@ router.patch('/:id', autorizarUsuarios([1]), [
  * @swagger
  * /api/v1/turnos-reservas/{id}:
  *   delete:
+ *     tags: [Turnos-Reservas]
  *     summary: Eliminar un turno (soft delete)
  *     description: Solo admin (3)
  *     parameters:
