@@ -1,4 +1,5 @@
 import { Usuarios } from "../db/usuarios.js";
+import crypto from "crypto";
 
 export default class UsuariosServicio {
 
@@ -19,7 +20,7 @@ export default class UsuariosServicio {
             apellido: body.apellido,
             nombres: body.nombres,
             email: body.email,
-            contrasenia: body.contrasenia,
+            contrasenia: crypto.createHash("sha256").update(body.contrasenia).digest("hex"),
             foto_path: body.foto_path || null,
             rol: Number(body.rol),
             //activo: body.activo ? 1 : 0
