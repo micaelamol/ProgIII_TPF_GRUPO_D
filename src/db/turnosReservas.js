@@ -30,26 +30,48 @@ export default class TurnosReservas {
     }
 
     buscarTodos = async () => {
-        const sql = `SELECT * FROM turnos_reservas WHERE activo = 1`;
+        const sql = `SELECT 
+                    id_turno_reserva,
+                    id_medico,
+                    id_paciente,
+                    id_obra_social,
+                    DATE_FORMAT(fecha_hora, '%d/%m/%Y %H:%i') AS fecha_hora,
+                    valor_total,
+                    atendido,
+                    activo
+                FROM turnos_reservas WHERE activo = 1`;
         const [turnos] = await connection.execute(sql);
         return turnos;
     }
 
     turnosDeUnMedico = async (id_usuario) => {
-        const sql = `SELECT tr.fecha_hora, tr.valor_total
-                    FROM usuarios AS u
-                    INNER JOIN medicos AS m ON m.id_usuario = u.id_usuario
-                    INNER JOIN turnos_reservas AS tr ON tr.id_medico = m.id_medico
-                    WHERE u.id_usuario = ? AND tr.activo = 1;`
+        const sql = `SELECT 
+                    tr.id_turno_reserva,
+                    DATE_FORMAT(tr.fecha_hora, '%d/%m/%Y %H:%i') AS fecha_hora,
+                    tr.valor_total,
+                    CASE WHEN tr.atendido = 1 THEN 'Atendido' ELSE 'Pendiente' END AS estado_turno,
+                    vp.nombres AS nombre_paciente,
+                    vp.apellido AS apellido_paciente
+                FROM medicos AS m
+                INNER JOIN turnos_reservas AS tr ON tr.id_medico = m.id_medico
+                INNER JOIN v_pacientes AS vp ON vp.id_paciente = tr.id_paciente
+                WHERE m.id_usuario = ? AND tr.activo = 1;`
         const [turnos] = await connection.execute(sql, [id_usuario]);
         return turnos;
     }
+
     turnosDeUnPaciente = async (id_usuario) => {
-        const sql = `SELECT tr.fecha_hora, tr.valor_total
-                        FROM usuarios as u
-                        INNER JOIN pacientes AS p ON p.id_usuario = u.id_usuario
-                        INNER JOIN turnos_reservas AS tr ON tr.id_paciente = p.id_paciente
-                        WHERE u.id_usuario = ? AND tr.activo = 1`
+        const sql = `SELECT 
+                    tr.id_turno_reserva,
+                    DATE_FORMAT(tr.fecha_hora, '%d/%m/%Y %H:%i') AS fecha_hora,
+                    tr.valor_total,
+                    CASE WHEN tr.atendido = 1 THEN 'Atendido' ELSE 'Pendiente' END AS estado_turno,
+                    vm.nombres AS nombre_medico,
+                    vm.apellido AS apellido_medico
+                FROM pacientes AS p
+                INNER JOIN turnos_reservas AS tr ON tr.id_paciente = p.id_paciente
+                INNER JOIN v_medicos AS vm ON vm.id_medico = tr.id_medico
+                WHERE p.id_usuario = ? AND tr.activo = 1`
         const [turnos] = await connection.execute(sql, [id_usuario]);
         return turnos;
     }
@@ -72,8 +94,7 @@ export default class TurnosReservas {
     }
 
     obtenerEstadisticasPorEspecialidad = async () => {
-    const [result] = await connection.execute('CALL sp_estadisticas_por_especialidad()');
-    console.log(result[0]);
-    return result[0];
-}
+        const [result] = await connection.execute('CALL sp_estadisticas_por_especialidad()');
+        return result[0];
+    }
 }

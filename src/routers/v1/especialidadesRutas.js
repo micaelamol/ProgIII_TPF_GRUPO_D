@@ -8,9 +8,17 @@ const router = Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Especialidades
+ *   description: Endpoints para gestionar Especialidades
+ */
+ 
+/**
+ * @swagger
  * /api/v1/especialidades:
  *   get:
- *     summary: Obtener todas las especialidades
+ *     summary: Obtener todas las Especialidades
+ *     tags: [Especialidades]
  *     responses:
  *       200:
  *         description: Lista de especialidades
@@ -27,6 +35,7 @@ router.get(
  * /api/v1/especialidades/{id_especialidad}:
  *   get:
  *     summary: Obtener una especialidad por ID
+ *     tags: [Especialidades]
  *     parameters:
  *       - in: path
  *         name: id_especialidad
@@ -55,6 +64,7 @@ router.get(
  * /api/v1/especialidades:
  *   post:
  *     summary: Crear una nueva especialidad
+ *     tags: [Especialidades]
  *     requestBody:
  *       required: true
  *       content:
@@ -87,6 +97,7 @@ router.post(
  * /api/v1/especialidades/{id_especialidad}:
  *   put:
  *     summary: Actualizar una especialidad por ID
+ *     tags: [Especialidades]
  *     parameters:
  *       - in: path
  *         name: id_especialidad
@@ -128,6 +139,7 @@ router.put(
  * /api/v1/especialidades/{id_especialidad}:
  *   delete:
  *     summary: Eliminar una especialidad por ID
+ *     tags: [Especialidades]
  *     parameters:
  *       - in: path
  *         name: id_especialidad
