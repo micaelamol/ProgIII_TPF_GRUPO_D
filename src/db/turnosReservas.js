@@ -49,7 +49,7 @@ export default class TurnosReservas {
                     tr.id_turno_reserva,
                     DATE_FORMAT(tr.fecha_hora, '%d/%m/%Y %H:%i') AS fecha_hora,
                     tr.valor_total,
-                    tr.atendido,
+                    CASE WHEN tr.atendido = 1 THEN 'Atendido' ELSE 'Pendiente' END AS estado_turno,
                     vp.nombres AS nombre_paciente,
                     vp.apellido AS apellido_paciente
                 FROM medicos AS m
@@ -65,7 +65,7 @@ export default class TurnosReservas {
                     tr.id_turno_reserva,
                     DATE_FORMAT(tr.fecha_hora, '%d/%m/%Y %H:%i') AS fecha_hora,
                     tr.valor_total,
-                    tr.atendido,
+                    CASE WHEN tr.atendido = 1 THEN 'Atendido' ELSE 'Pendiente' END AS estado_turno,
                     vm.nombres AS nombre_medico,
                     vm.apellido AS apellido_medico
                 FROM pacientes AS p
