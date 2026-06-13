@@ -23,8 +23,8 @@ const turnosReservasControlador = new TurnosReservasControlador();
  *       500:
  *         description: Error interno
  */
-//router.get('/por-especialidad', autorizarUsuarios([3]), turnosReservasControlador.porEspecialidad);
-router.get('/por-especialidad', turnosReservasControlador.porEspecialidad);
+router.get('/por-especialidad', autorizarUsuarios([3]), turnosReservasControlador.porEspecialidad);
+//router.get('/por-especialidad', turnosReservasControlador.porEspecialidad); como lo hizo el profe
 
 ///////////////////////
 
