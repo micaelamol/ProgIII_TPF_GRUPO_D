@@ -3,8 +3,8 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 import {createClient} from "redis";
-//import dotenv from "dotenv";
-//dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 export class LoginController {
   static async login(req, res) {
@@ -51,16 +51,37 @@ export class LoginController {
         const token = jwt.sign(payload, process.env.SECRET_KEY, {
           expiresIn: "1h",
         });
-        // Elimina la contraseña del objeto de usuario antes de enviarlo en la respuesta
-        usuarioEncontrado.contrasenia = "";
+       
         // Envía el token JWT  y devuelve un JSON con el resultado exitoso
-        res
+        return res
           .status(200)
           .json({ estado: true, token: token });
       }
     } catch (error) {
       console.error("Error en el login: ", error);
       res.status(500).send(error.message);
+    }
+  }
+
+  static async logout(req, res) {
+    try {
+      const token = req.headers['authorization']?.split(' ')[1];
+      if (token) {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
+
+        const client = await createClient({url: 'redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527'});
+        await client.connect();
+
+        await client.setEx(`revoked_${token}`, expiresIn, "anulado");
+        await client.quit();
+        return res.status(200).json({ success: true, message: "Logout exitoso" });
+      } else {
+        return res.status(400).json({ success: false, message: "Token no proporcionado" });
+      } 
+    } catch (error) {
+      console.error("Error en el logout: ", error);
+      return res.status(500).json({ success: false, message: "Error en el proceso de logout" });
     }
   }
 }
