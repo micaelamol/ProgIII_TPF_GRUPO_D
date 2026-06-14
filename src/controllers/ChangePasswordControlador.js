@@ -13,7 +13,7 @@ export class changePasswordController {
 //funcion para solicitar el cambio de contraseña, recibe un email, verifica si existe en la base de datos, genera un token JWT con el id_usuario y el email como payload, lo guarda en Redis con una expiración de 15 minutos y devuelve el token en la respuesta
   async forgotPassword(req, res) {
     try {
-      console.log("Forgot password endpoint hit");
+      //console.log("Forgot password endpoint hit");
 
       const usuarios = await Usuarios.listarUsuarios();
       //console.log("Usuarios:", usuarios);

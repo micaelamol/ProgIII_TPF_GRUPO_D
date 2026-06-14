@@ -64,7 +64,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ estado: false, msg: "Error interno del servidor" });
 });
 
-export default app;
 
 // Opciones de Swagger
 const swaggerOptions = {
@@ -97,3 +96,4 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Montar Swagger en /docs
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+export default app;
