@@ -47,7 +47,7 @@ export class LoginController {
           usuario: usuarioEncontrado.nombres + " " + usuarioEncontrado.apellido,
           rol: usuarioEncontrado.rol,
         };
-        console.log("Payload del token JWT: ", payload);
+        //console.log("Payload del token JWT: ", payload);
         const token = jwt.sign(payload, process.env.SECRET_KEY, {
           expiresIn: "1h",
         });
@@ -64,7 +64,7 @@ export class LoginController {
   static async logout(req, res) {
     try {
     ///res.clearCookie("acces-token").status(200).json({ success: true, message: "Logout exitoso" });
-    console.log("Iniciando proceso de logout...");
+    //console.log("Iniciando proceso de logout...");
     const token = req.headers['authorization']?.split(' ')[1];
     if (token) {
       const usuario = async () => await Usuarios.obtenerUsuarioPorId(datos.id_usuario);
