@@ -46,7 +46,7 @@ router.post("/login", async (req,res) => await LoginController.login(req,res));
  * /api/v1/auth/logout:
  *   post:
  *     summary: Cerrar sesión
- *     description: Elimina la cookie de acceso y cierra la sesión del usuario.
+ *     description: Elimina el token de acceso y cierra la sesión del usuario.
  *     tags: [Auth]
  *     responses:
  *       200:
