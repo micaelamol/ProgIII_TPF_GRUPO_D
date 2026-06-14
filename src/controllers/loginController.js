@@ -47,22 +47,16 @@ export class LoginController {
           usuario: usuarioEncontrado.nombres + " " + usuarioEncontrado.apellido,
           rol: usuarioEncontrado.rol,
         };
-        console.log("Payload del token JWT: ", payload);
+        //console.log("Payload del token JWT: ", payload);
         const token = jwt.sign(payload, process.env.SECRET_KEY, {
           expiresIn: "1h",
         });
         // Elimina la contraseña del objeto de usuario antes de enviarlo en la respuesta
         usuarioEncontrado.contrasenia = "";
-        // Envía el token JWT en una cookie segura y devuelve un JSON con el resultado exitoso y los datos del usuario
+        // Envía el token JWT  y devuelve un JSON con el resultado exitoso
         res
-          .cookie("acces-token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-            maxAge: 3600000,
-          })
           .status(200)
-          .json({ estado: true, message: "Inicio de sesion exitoso" });
+          .json({ estado: true, token: token });
       }
     } catch (error) {
       console.error("Error en el login: ", error);
