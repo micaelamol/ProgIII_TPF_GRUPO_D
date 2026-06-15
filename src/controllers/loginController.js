@@ -3,8 +3,8 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 import {createClient} from "redis";
-//import dotenv from "dotenv";
-//dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 export class LoginController {
   static async login(req, res) {
@@ -51,9 +51,11 @@ export class LoginController {
         const token = jwt.sign(payload, process.env.SECRET_KEY, {
           expiresIn: "1h",
         });
-
-        // Envía el token JWT en un JSON con el resultado exitoso
-        res.status(200).json({ estado: true, token: token });
+       
+        // Envía el token JWT  y devuelve un JSON con el resultado exitoso
+        return res
+          .status(200)
+          .json({ estado: true, token: token });
       }
     } catch (error) {
       console.error("Error en el login: ", error);
@@ -63,32 +65,23 @@ export class LoginController {
 
   static async logout(req, res) {
     try {
-    ///res.clearCookie("acces-token").status(200).json({ success: true, message: "Logout exitoso" });
-    //console.log("Iniciando proceso de logout...");
-    const token = req.headers['authorization']?.split(' ')[1];
-    if (token) {
-      const usuario = async () => await Usuarios.obtenerUsuarioPorId(datos.id_usuario);
-      if (!usuario) {
-        res.status(401).json({ success: false, message: "Usuario no encontrado" });
-        return;
-      }
-      // Agrega el token a la lista de tokens revocados en Redis con una expiración igual al tiempo restante del token
-      const client = await createClient({url: 'redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527'});
-      await client.connect();
-      const decoded = jwt.decode(token,process.env.SECRET_KEY);
-      const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
-      await client.setEx(`revoked_${token}`, expiresIn, "anulado");
-      await client.quit();
-      return res.status(200).json({ success: true, message: "Logout exitoso" });
-    }else {
-      return res.status(400).json({ success: false, message: "No se proporcionó un token válido" });
-    }
-  
+      const token = req.headers['authorization']?.split(' ')[1];
+      if (token) {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
+
+        const client = await createClient({url: 'redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527'});
+        await client.connect();
+
+        await client.setEx(`revoked_${token}`, expiresIn, "anulado");
+        await client.quit();
+        return res.status(200).json({ success: true, message: "Logout exitoso" });
+      } else {
+        return res.status(400).json({ success: false, message: "Token no proporcionado" });
+      } 
     } catch (error) {
       console.error("Error en el logout: ", error);
-      res.status(500).send(error.message);
-
-
+      return res.status(500).json({ success: false, message: "Error en el proceso de logout" });
+    }
   }
-}
 }
