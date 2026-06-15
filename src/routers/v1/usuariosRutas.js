@@ -5,11 +5,52 @@ import { validarCampos } from "../../middlewares/validarCampos.js";
 
 const router = Router();
 
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Usuarios
+ *   description: Endpoints para gestionar usuarios
+ */
+
+/**
+ * @swagger
+ * /api/v1/usuarios:
+ *   get:
+ *     summary: Obtener todos los usuarios
+ *     tags: [Usuarios]
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
+ */
+
 // GET de todos los usuarios
 router.get(
     "/",
     UsuariosController.obtenerUsuarios
 );
+
+
+/**
+ * @swagger
+ * /api/v1/usuarios/{id_usuario}:
+ *   get:
+ *     summary: Obtener un usuario por ID
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - in: path
+ *         name: id_usuario
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Usuario encontrado
+ *       404:
+ *         description: Usuario no encontrado
+ */
+
 
 // GET — usuario por ID
 router.get(
@@ -20,6 +61,63 @@ router.get(
     ],
     UsuariosController.obtenerUsuarioPorId
 );
+
+
+
+
+
+/**
+ * @swagger
+ * /api/v1/usuarios:
+ *   post:
+ *     summary: Crear usuario
+ *     tags: [Usuarios]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - documento
+ *               - apellido
+ *               - nombres
+ *               - email
+ *               - contrasenia
+ *               - rol
+ *             properties:
+ *               documento:
+ *                 type: string
+ *               apellido:
+ *                 type: string
+ *               nombres:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               contrasenia:
+ *                 type: string
+ *               foto_path:
+ *                 type: string
+ *               rol:
+ *                 type: integer
+ *               activo:
+ *                 type: integer
+ *           example:
+ *             documento: "31000114"
+ *             apellido: "Perez"
+ *             nombres: "Luis"
+ *             email: "perlui@correo.com"
+ *             contrasenia: "123456"
+ *             foto_path: " "
+ *             rol: 2
+ *             activo: 1
+ *     responses:
+ *       201:
+ *         description: Usuario creado correctamente
+ 
+ *       
+ */
+
 
 // POST — crear usuario
 router.post(
@@ -64,6 +162,60 @@ router.post(
     ],
     UsuariosController.crearUsuario
 );
+
+
+
+
+/**
+ * @swagger
+ * /api/v1/usuarios/{id_usuario}:
+ *   put:
+ *     summary: Modificar usuario
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - in: path
+ *         name: id_usuario
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               documento:
+ *                 type: string
+ *               apellido:
+ *                 type: string
+ *               nombres:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               contrasenia:
+ *                 type: string
+ *               foto_path:
+ *                 type: string
+ *               rol:
+ *                 type: integer
+ *               activo:
+ *                 type: integer
+ *           example:
+ *             documento: "31000114"
+ *             apellido: "Perez"
+ *             nombres: "Luis"
+ *             email: "perlui@correo.com"
+ *             contrasenia: "hash123"
+ *             foto_path: ""
+ *             rol: 2
+ *             activo: 1
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado correctamente
+ *       404:
+ *         description: Usuario no encontrado
+ */
 
 // PUT — modificar usuario
 router.put(
