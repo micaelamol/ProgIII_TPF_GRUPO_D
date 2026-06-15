@@ -1,136 +1,268 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Actualizar Perfil</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;   
-      align-items: center;       
-      background-color: #f4f4f4; 
-    }
-    form {
-      background: #fff;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 450px;   /* ancho máximo */
-      display: flex;
-      flex-direction: column;
-      gap: 15px;          /* espacio */
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-    label { font-weight: bold; margin-bottom: 5px; }
-    input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .foto-container {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .foto-icon {
-      width: 70px; height: 70px;
-      border: 2px dashed #aaa;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; color: #555;
-      overflow: hidden;
-    }
-    .foto-icon img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-    button {
-      padding: 10px;
-      background: #007BFF;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Actualizar Perfil</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 450px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.foto-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.foto-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px dashed #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.foto-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#mensaje {
+    text-align: center;
+    font-weight: bold;
+}
+</style>
+
 </head>
 <body>
-  <form action="http://localhost:3000/api/v1/usuarios" method="POST" enctype="multipart/form-data">
-    <h1>Actualizar Perfil</h1>
+
+<form id="formPerfil">
+
+    <h2>Actualizar Perfil</h2>
 
     <div>
-      <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" name="nombres" placeholder="Ingrese nombre" required>
+        <label>Nombre</label>
+        <input type="text" id="nombres" required>
     </div>
 
     <div>
-      <label for="apellido">Apellido</label>
-      <input type="text" id="apellido" name="apellido" placeholder="Ingrese apellido" required>
+        <label>Apellido</label>
+        <input type="text" id="apellido" required>
     </div>
 
     <div>
-      <label for="documento">Documento</label>
-      <input type="text" id="documento" name="documento" placeholder="Ej: 1154554" required>
-    </div>
-
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
-    </div>
-
-    <div>
-      <label for="contrasenia">Contraseña</label>
-      <input type="password" id="contrasenia" name="contrasenia" placeholder="Ingrese contraseña" required>
-    </div>
-
-    <div>
-      <label for="rol">Rol (1 a 3)</label>
-      <input type="number" id="rol" name="rol" min="1" max="3" value="1" required>
-    </div>
-
-    <div>
-      <label for="activo">Activo (0 o 1)</label>
-      <input type="number" id="activo" name="activo" min="0" max="1" value="1" required>
+        <label>Documento</label>
+        <input type="text" id="documento" required>
     </div>
 
     <div class="foto-container">
-      <div class="foto-icon" id="preview">Foto</div>
-      <div>
-        <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
-      </div>
+
+        <div class="foto-icon" id="preview">
+            Foto
+        </div>
+
+        <input
+            type="file"
+            id="foto_perfil"
+            name="foto_perfil"
+            accept="image/*">
+
     </div>
 
-    <button type="submit">Actualizar datos</button>
-  </form>
+    <button type="submit">
+        Actualizar Datos
+    </button>
 
-  <script>
-    const inputFile = document.getElementById("foto_perfil");
-    const preview = document.getElementById("preview");
+    <div id="mensaje"></div>
 
-    inputFile.addEventListener("change", () => {
-      const file = inputFile.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          preview.innerHTML = `<img src="${e.target.result}" alt="Foto">`;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        preview.innerHTML = "Foto";
-      }
-    });
-  </script>
+</form>
+
+<script>
+
+const ID_USUARIO = 1;
+
+const nombres = document.getElementById("nombres");
+const apellido = document.getElementById("apellido");
+const documento = document.getElementById("documento");
+const foto = document.getElementById("foto_perfil");
+const preview = document.getElementById("preview");
+const mensaje = document.getElementById("mensaje");
+
+async function cargarUsuario() {
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `http://localhost:3000/api/v1/usuarios/${ID_USUARIO}`
+            );
+
+        const datos = await respuesta.json();
+
+        console.log(datos);
+
+        const usuario = datos.usuario;
+
+        nombres.value = usuario.nombres || "";
+        apellido.value = usuario.apellido || "";
+        documento.value = usuario.documento || "";
+
+        if (usuario.foto_path) {
+
+            preview.innerHTML =
+                `<img src="http://localhost:3000/${usuario.foto_path}" alt="foto">`;
+
+        }
+
+    } catch(error) {
+
+        console.error(error);
+
+        mensaje.innerHTML =
+            "Error al cargar usuario";
+    }
+}
+
+foto.addEventListener("change", () => {
+
+    const archivo = foto.files[0];
+
+    if (!archivo) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+
+        preview.innerHTML =
+            `<img src="${e.target.result}" alt="foto">`;
+
+    };
+
+    reader.readAsDataURL(archivo);
+
+});
+
+document
+.getElementById("formPerfil")
+.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append(
+        "nombres",
+        nombres.value
+    );
+
+    formData.append(
+        "apellido",
+        apellido.value
+    );
+
+    formData.append(
+        "documento",
+        documento.value
+    );
+
+    if (foto.files.length > 0) {
+
+        formData.append(
+            "foto_perfil",
+            foto.files[0]
+        );
+
+    }
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `http://localhost:3000/api/v1/usuarios/${ID_USUARIO}`,
+                {
+                    method: "PUT",
+                    body: formData
+                }
+            );
+
+        const resultado =
+            await respuesta.json();
+
+        console.log(resultado);
+
+        if (respuesta.ok) {
+
+            mensaje.innerHTML =
+                "Usuario actualizado correctamente";
+
+        } else {
+
+            mensaje.innerHTML =
+                resultado.msg ||
+                resultado.mensaje ||
+                "Error al actualizar";
+
+        }
+
+    } catch(error) {
+
+        console.error(error);
+
+        mensaje.innerHTML =
+            "Error de conexión";
+
+    }
+
+});
+
+cargarUsuario();
+
+</script>
+
 </body>
 </html>

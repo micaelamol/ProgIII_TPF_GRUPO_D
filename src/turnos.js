@@ -18,15 +18,13 @@ import medicosRouter from "./routers/v1/medicosRutas.js";
 import pacientesRouter from "./routers/v1/pacientesRutas.js";
 import usuariosRouter from "./routers/v1/usuariosRutas.js"
 import { autentication } from "./middlewares/autentication.js";
-<<<<<<< HEAD
-
-/////
+import changePasswordRouter from "./routers/v1/changePasswordRutas.js";
+// 
 import passport from "passport";
 import { estrategia, validacion } from "./config/passport.js";
-=======
-import changePasswordRouter from "./routers/v1/changePasswordRutas.js";
->>>>>>> origin/main
+
 dotenv.config();
+
 
 const app = express();
 

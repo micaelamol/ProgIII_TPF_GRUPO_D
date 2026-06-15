@@ -69,31 +69,47 @@ router.post(
 );
 
 // PUT — modificar usuario
+// PUT — modificar usuario
 router.put(
   "/:id_usuario",
+  upload,
   [
     param("id_usuario", "El ID debe ser un número entero").isInt(),
+
     check("documento")
-      .notEmpty().withMessage("El documento es obligatorio.")
+      .notEmpty()
+      .withMessage("El documento es obligatorio.")
       .isLength({ max: 20 }),
+
     check("apellido")
-      .notEmpty().withMessage("El apellido es obligatorio.")
+      .notEmpty()
+      .withMessage("El apellido es obligatorio.")
       .isLength({ max: 100 }),
+
     check("nombres")
-      .notEmpty().withMessage("Los nombres son obligatorios.")
+      .notEmpty()
+      .withMessage("Los nombres son obligatorios.")
       .isLength({ max: 100 }),
-    check("email")
-      .notEmpty().isEmail().withMessage("Debe ingresar un email válido."),
-    check("contrasenia")
-      .notEmpty().isLength({ min: 6, max: 255 }),
-    check("foto_path").optional().isLength({ max: 255 }),
-    check("rol").isInt().withMessage("El rol debe ser un número entero."),
-    check("activo")
-      .isInt({ min: 0, max: 1 })
-      .withMessage("Activo debe ser 0 o 1."),
+
     validarCampos,
   ],
-  UsuariosController.actualizarUsuario
+  async (req, res) => {
+    try {
+
+      if (req.file) {
+        req.body.foto_path = req.file.filename;
+      }
+
+      await UsuariosController.actualizarUsuario(req, res);
+
+    } catch (error) {
+      res.status(400).json({
+        estado: false,
+        msg: "Error al actualizar usuario",
+        error: error.message
+      });
+    }
+  }
 );
 
 // DELETE — eliminar usuario
