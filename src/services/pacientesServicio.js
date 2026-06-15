@@ -26,7 +26,7 @@ const paciente = await Pacientes.listarPacientePorId(id);
  }
 
  static async actualizarPaciente(id, body) {
- const pacienteActualizado = {
+ const pacienteActualizado = { 
  id_obra_social: Number(body.id_obra_social)
  };
 

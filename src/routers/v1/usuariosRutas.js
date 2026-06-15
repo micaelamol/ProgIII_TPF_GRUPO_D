@@ -71,9 +71,11 @@ router.put(
     [
         param("id_usuario", "El ID debe ser un número entero").isInt(),
 
-        check("documento")
-            .notEmpty().withMessage("El documento es obligatorio.")
-            .isLength({ max: 20 }),
+        //check("documento")
+         //   .optional(),
+           //.notEmpty().withMessage("El documento es obligatorio.")
+           // .isLength({ max: 20 }),
+           
 
         check("apellido")
             .notEmpty().withMessage("El apellido es obligatorio.")
@@ -88,7 +90,7 @@ router.put(
             .withMessage("Debe ingresar un email válido."),
 
         check("contrasenia")
-            .notEmpty()
+            .optional()
             .isLength({ min: 6, max: 255 }),
 
         check("foto_path")

@@ -150,7 +150,7 @@ static async eliminarPaciente(id) {
   try {
 
     const [paciente] = await connection.query(
-      `SELECT id_usuario
+      `SELECT id_usuario 
        FROM pacientes
        WHERE id_paciente = ?`,
       [id]
@@ -173,9 +173,15 @@ static async eliminarPaciente(id) {
       id_paciente: id,
       mensaje: "Paciente eliminado correctamente"
     };
+     //return  await this.listarPacientePorId(id);
+
+  
+    
 
   } catch (error) {
     throw error;
   }
 }
 }
+
+

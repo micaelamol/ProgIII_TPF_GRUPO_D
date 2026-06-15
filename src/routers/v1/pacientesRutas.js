@@ -5,8 +5,48 @@ import { validarCampos } from "../../middlewares/validarCampos.js";
 
 const router = Router();
 
+
+/**
+ * @swagger
+ * tags:
+ *   name: Pacientes
+ *   description: Endpoints para gestionar pacientes
+ */
+
+/**
+ * @swagger
+ * /api/v1/pacientes:
+ *   get:
+ *     summary: Obtener todos los pacientes
+ *     tags: [Pacientes]
+ *     responses:
+ *       200:
+ *         description: Lista de pacientes
+ */
+
+
 //GET
 router.get("/", pacientesController.obtenerPacientes);
+
+
+/**
+ * @swagger
+ * /api/v1/pacientes/{id_paciente}:
+ *   get:
+ *     summary: Obtener un paciente por ID
+ *     tags: [Pacientes]
+ *     parameters:
+ *       - in: path
+ *         name: id_paciente
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Paciente encontrado
+ *       404:
+ *         description: Paciente no encontrado
+ */
 
 //Get paciente por ID
 router.get(
@@ -18,6 +58,9 @@ router.get(
  pacientesController.obtenerPacientePorId
 
 );
+
+
+
 
 //POST  crear paciente
 router.post(
@@ -35,6 +78,41 @@ router.post(
 pacientesController.crearPaciente
 );
 
+
+
+
+
+
+/**
+ * @swagger
+ * /api/v1/pacientes/{id_paciente}:
+ *   put:
+ *     summary: Modificar paciente
+ *     tags: [Pacientes]
+ *     parameters:
+ *       - in: path
+ *         name: id_paciente
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id_obra_social:
+ *                 type: integer
+ *                 example: 10
+ *     responses:
+ *       200:
+ *         description: Paciente actualizado correctamente
+ *       404:
+ *         description: Paciente no encontrado
+ */
+
+
 //PUT modificar paciente
 router.put(
   "/:id_paciente",
@@ -49,6 +127,27 @@ router.put(
   ],
   pacientesController.actualizarPaciente
 );
+
+
+
+/**
+ * @swagger
+ * /api/v1/pacientes/{id_paciente}:
+ *   delete:
+ *     summary: Eliminar un paciente
+ *     tags: [Pacientes]
+ *     parameters:
+ *       - in: path
+ *         name: id_paciente
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Paciente eliminado con éxito
+ *       404:
+ *         description: Paciente no encontrado
+ */
 
 //DELETE paciente
 router.delete(

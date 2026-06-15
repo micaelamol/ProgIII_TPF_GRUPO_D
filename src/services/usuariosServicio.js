@@ -41,8 +41,9 @@ export default class UsuariosServicio {
             contrasenia: body.contrasenia,
             foto_path: body.foto_path || null,
             rol: Number(body.rol),
-            //activo: body.activo ? 1 : 0
             activo: Number(body.activo),
+            //rol: body.rol !== undefined ? Number(body.rol) : undefined,
+          // activo: body.activo !== undefined ? Number(body.activo) : undefined
         };
 
         const resultado = await Usuarios.actualizarUsuario(
