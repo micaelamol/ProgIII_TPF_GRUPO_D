@@ -262,6 +262,30 @@ router.put(
     UsuariosController.actualizarUsuario
 );
 
+
+
+
+/**
+ * @swagger
+ * /api/v1/usuarios/{id_usuario}:
+ *   delete:
+ *     summary: Eliminar usuario
+ *     tags: [Usuarios]
+ *     description: Elimina un usuario por su ID
+ *     parameters:
+ *       - in: path
+ *         name: id_usuario
+ *         required: true
+ *         description: ID del usuario a eliminar
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado correctamente
+ *       404:
+ *         description: Usuario no encontrado
+ *     
+ */
 // DELETE — eliminar usuario
 router.delete(
     "/:id_usuario",
