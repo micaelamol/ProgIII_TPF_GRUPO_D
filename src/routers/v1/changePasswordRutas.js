@@ -22,7 +22,7 @@ const controller = new changePasswordController();
  *   post:
  *     summary: Solicitar cambio de contraseña
  *     description: Devuelve un token para cambiar la contraseña. El que sera utilizado en la ruta reset
- *     tags: [renovar la contraseña]
+ *     tags: [Renovar la contraseña]
  *     requestBody:
  *       required: true
  *       content:
@@ -52,7 +52,7 @@ const controller = new changePasswordController();
  *  post:
  *    summary: Restablecer contraseña
  *    description: Restablece la contraseña utilizando un token válido.
- *    tags: [renovar la contraseña]
+ *    tags: [Renovar la contraseña]
  *    requestBody:
  *      required: true
  *      content:

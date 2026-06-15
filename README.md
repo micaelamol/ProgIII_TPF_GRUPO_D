@@ -41,6 +41,7 @@ DB_PASSWORD=tu_contraseña
 DB_NAME=prog3_turnos
 PORT=3000
 SECRET_KEY=una_clave_secreta_larga
+REDIS_HOST=redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527
 ```
 
 ## 📖 Documentación

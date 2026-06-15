@@ -48,9 +48,37 @@ router.post("/login", async (req,res) => await LoginController.login(req,res));
  *     summary: Cerrar sesión
  *     description: Elimina el token de acceso y cierra la sesión del usuario.
  *     tags: [Auth]
+ *     security:
+ *         - bearerAuth: []
  *     responses:
- *       200:
- *         description: Logout exitoso
+ *        200:
+ *          description: Logout exitoso
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  success:
+ *                    type: boolean
+ *                    example: true
+ *                  message:
+ *                    type: string
+ *                    example: Logout exitoso
+ *        401:
+ *          description: Token no proporcionado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  success:
+ *                    type: boolean
+ *                    example: false
+ *                  message:
+ *                    type: string
+ *                    example: Token no proporcionado
+ *        500:
+ *          description: Error en el proceso de logout
  */
 
 

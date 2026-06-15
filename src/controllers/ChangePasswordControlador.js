@@ -35,7 +35,7 @@ export class changePasswordController {
         expiresIn: "0.25h",
       });
       const client = createClient({
-        url: "redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527",
+        url: process.env.REDIS_HOST,
       });
       await client.connect();
       await client.set(
@@ -62,7 +62,7 @@ export class changePasswordController {
       //console.log("Decoded token:", decoded);
 
       const client = createClient({
-        url: "redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527",
+        url: process.env.REDIS_HOST,
       });
       await client.connect();
       const storedToken = await client.get(`reset_token:${decoded.id_usuario}`);

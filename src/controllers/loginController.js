@@ -66,18 +66,19 @@ export class LoginController {
   static async logout(req, res) {
     try {
       const token = req.headers['authorization']?.split(' ')[1];
+      
       if (token) {
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
 
-        const client = await createClient({url: 'redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527'});
+        const client = await createClient({url: process.env.REDIS_HOST});
         await client.connect();
 
         await client.setEx(`revoked_${token}`, expiresIn, "anulado");
         await client.quit();
         return res.status(200).json({ success: true, message: "Logout exitoso" });
       } else {
-        return res.status(400).json({ success: false, message: "Token no proporcionado" });
+        return res.status(401).json({ success: false, message: "Token no proporcionado" });
       } 
     } catch (error) {
       console.error("Error en el logout: ", error);
