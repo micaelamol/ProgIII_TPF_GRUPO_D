@@ -101,3 +101,88 @@ src/
 ├── servidor.js
 └── turnos.js
 ```
+🚀 Funcionalidades implementadas
+📄 Generación de informes PDF
+
+Se incorporó la generación de reportes PDF con estadísticas de turnos agrupados por especialidad.
+
+Tecnologías utilizadas
+📊 Procedimiento almacenado (Stored Procedure) en MySQL.
+📑 Handlebars (.hbs) para la plantilla HTML.
+🤖 Puppeteer para convertir HTML a PDF.
+🌐 Endpoint REST documentado en Swagger.
+Flujo de funcionamiento
+Se ejecuta un procedimiento almacenado en la base de datos.
+Se obtienen las estadísticas de turnos por especialidad.
+Los datos se envían a una plantilla Handlebars.
+Puppeteer genera el PDF.
+
+📌 Endpoint PDF
+GET /api/v1/turnos-reservas/por-especialidad
+Permisos
+
+✅ Administrador (Rol 3)
+
+
+👤 Actualización de perfil de usuario
+
+Se desarrolló un formulario web para actualizar datos de un usuario.
+
+Funcionalidades
+✏️ Modificar nombre.
+✏️ Modificar apellido.
+✏️ Modificar documento.
+🖼️ Subir foto de perfil.
+👁️ Vista previa de la imagen seleccionada.
+Tecnologías utilizadas
+HTML
+CSS
+JavaScript (Fetch API)
+Multer
+Express
+📸 Carga de imágenes
+
+Para almacenar imágenes de perfil se utilizó Multer
+Las imágenes se guardan en:
+src/publico/
+En la base de datos solamente se almacena:
+foto_path
+
+Ejemplo:
+
+1781487407188-imagen.jpg
+
+La imagen física permanece dentro de:
+src/publico/
+
+🔐 Se implementó autenticación mediante JWT.
+
+Librerías utilizadas
+npm install passport
+npm install passport-local
+npm install passport-jwt
+Estrategias configuradas
+🔑 Permite validar el token enviado en:
+
+Authorization: Bearer TOKEN
+
+📚Formulario
+http://localhost:3000/perfil.html
+Usuario de prueba
+http://localhost:3000/api/v1/usuarios/1
+⚙️ Ejecución del proyecto
+Instalar dependencias
+npm install
+Ejecutar servidor
+npm run dev
+🛠️ Tecnologías utilizadas
+🟢 Node.js
+⚡ Express
+🐬 MySQL
+📚 Swagger
+🔐 JWT
+🛂 Passport
+📸 Multer
+📑 Handlebars
+🤖 Puppeteer
+🎨 HTML + CSS + JavaScript
