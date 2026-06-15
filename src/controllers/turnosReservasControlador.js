@@ -9,7 +9,6 @@ export default class TurnosReservasControlador {
     crear = async (req, res) => {
         try {
             const turnoReserva = req.body;
-
             const nuevoTurnoReserva = await this.turnosReservas.crear(turnoReserva);
 
             if (!nuevoTurnoReserva || nuevoTurnoReserva.length === 0) {
@@ -36,6 +35,21 @@ export default class TurnosReservasControlador {
         }
     }
 
+    // Nuevo método para generar PDF por especialidad
+    porEspecialidad = async (req, res) => {
+        try {
+            const { buffer, headers } = await this.turnosReservas.porEspecialidad();
+            res.set(headers);
+            res.status(200).end(buffer);
+        } catch (error) {
+            console.log(`Error en GET /turnos-reservas/por-especialidad ${error}`);
+            res.status(500).json({
+                estado: false,
+                mensaje: "Error interno"
+            });
+        }
+    }
+
     buscarTodos = async (req, res) => {
         try {
             const usuario = req.user;
@@ -43,6 +57,7 @@ export default class TurnosReservasControlador {
             if (!usuario) {
                 return res.status(401).json({ estado: false, mensaje: 'No autorizado' });
             }
+
             const turnos = await this.turnosReservas.buscarTodas(usuario);
             res.status(200).json({ estado: true, mensaje: 'Turnos encontrados: ', turnos });
         } catch (error) {
@@ -90,12 +105,13 @@ export default class TurnosReservasControlador {
     }
 
     obtenerEstadisticasPorEspecialidad = async (req, res) => {
-    try {
-        const estadisticas = await this.turnosReservas.obtenerEstadisticasPorEspecialidad();
-        res.status(200).json({ estado: true, datos: estadisticas });
-    } catch (error) {
-        console.log(`Error en GET /turnos-reservas/estadisticas-especialidad ${error}`);
-        res.status(500).json({ estado: false, mensaje: 'Error interno.' });
+        try {
+            const estadisticas = await this.turnosReservas.obtenerEstadisticasPorEspecialidad();
+            res.status(200).json({ estado: true, datos: estadisticas });
+        } catch (error) {
+            console.log(`Error en GET /turnos-reservas/estadisticas-especialidad ${error}`);
+            res.status(500).json({ estado: false, mensaje: 'Error interno.' });
+        }
     }
 }
-}
+

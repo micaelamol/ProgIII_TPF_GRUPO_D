@@ -2,6 +2,7 @@ import TurnosReservas from "../db/turnosReservas.js";
 import MedicosServicio from "../services/medicosServicio.js";
 import PacientesServicio from "../services/pacientesServicio.js";
 import ObrasSocialesServicio from "../services/obrasSocialesServicio.js";
+import InformeServicio from "../services/informesServicios.js"; //  importar el servicio de informes
 
 export default class TurnosReservasServicio {
 
@@ -27,6 +28,30 @@ export default class TurnosReservasServicio {
         const id = await this.turnosReservas.crear(turnoReserva);
         return id;
     }
+
+
+    //  NUEVO MÉTODO: genera informe PDF por especialidad
+   porEspecialidad = async () => {
+    // 1. Buscar datos desde la capa DB
+    const datos = await this.turnosReservas.obtenerEstadisticasPorEspecialidad();
+
+    // 2. Generar PDF con esos datos usando InformeServicio
+    const pdf = await InformeServicio.reportePorEspecialidades(datos);
+
+    // 3. Devolver buffer y headers
+    return {
+        buffer: pdf,
+        headers: {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'inline; filename="reporte.pdf"'
+        }
+    };
+}
+
+///
+
+
+
 
     buscarTodas = async (usuario) => {
         if (usuario.rol === 1) {

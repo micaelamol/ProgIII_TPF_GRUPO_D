@@ -15,6 +15,25 @@ const turnosReservasControlador = new TurnosReservasControlador();
  *   description: Endpoints para gestionar turnos y reservas
  */
 
+
+/**
+ * @swagger
+ * /api/v1/turnos-reservas/por-especialidad:
+ *   get:
+ *     tags: [Turnos-Reservas]
+ *     summary: Generar informe PDF de turnos por especialidad
+ *     description: Solo admin (3). Devuelve un PDF con estadísticas agrupadas por especialidad.
+ *     responses:
+ *       200:
+ *         description: PDF generado correctamente
+ *       403:
+ *         description: Sin permisos
+ *       500:
+ *         description: Error interno
+ */
+router.get('/por-especialidad', autorizarUsuarios([3]), turnosReservasControlador.porEspecialidad);
+
+
 /**
  * @swagger
  * /api/v1/turnos-reservas:
@@ -44,7 +63,6 @@ const turnosReservasControlador = new TurnosReservasControlador();
  *       403:
  *         description: Sin permisos
  */
-// Agregar autenticaciones aca segun el rol
 router.post('/', autorizarUsuarios([2, 3]),
     [
         check('id_medico')
@@ -79,6 +97,7 @@ router.get('/estadisticas', autorizarUsuarios([3]), turnosReservasControlador.ob
  * @swagger
  * /api/v1/turnos-reservas/estadisticas-especialidad:
  *   get:
+ *     tags: [Turnos-Reservas]
  *     summary: Obtener estadísticas de turnos por especialidad
  *     description: Solo admin (3). Ejecuta un stored procedure.
  *     responses:

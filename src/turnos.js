@@ -5,6 +5,7 @@ import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import cors from "cors";
+import path from "path"; // importar path
 
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
@@ -18,9 +19,25 @@ import pacientesRouter from "./routers/v1/pacientesRutas.js";
 import usuariosRouter from "./routers/v1/usuariosRutas.js"
 import { autentication } from "./middlewares/autentication.js";
 import changePasswordRouter from "./routers/v1/changePasswordRutas.js";
+// 
+import passport from "passport";
+import { estrategia, validacion } from "./config/passport.js";
+
 dotenv.config();
 
+
 const app = express();
+
+// Inicializar Passport
+passport.use(estrategia);   // login local
+passport.use(validacion);   // validación JWT
+app.use(passport.initialize());
+
+
+
+//agregado
+// Servir archivos estáticos desde src/publico
+app.use(express.static(path.join(process.cwd(), "src/publico")));
 
 let log = fs.createWriteStream('./accesos.log', { 
     flags: 'a'
@@ -34,7 +51,7 @@ app.use(morgan('combined', {stream: log}));
 app.use(express.json());
 
 //autenticacion con JWT
-//middleware para verificar el token JWT en cada solicitud, extraer los datos del usuario autenticado y almacenarlos en req.session para su uso en las rutas protegidas
+//middleware para verificar el token JWT en cada solicitud
 app.use(cookieParser());
 app.use(autentication);
 
@@ -89,7 +106,7 @@ const swaggerOptions = {
       }
     ]
   },
-  apis: ["./src/routers/v1/*.js"] // ajustá la ruta según donde tengas tus archivos de rutas
+  apis: ["./src/routers/v1/*.js"] // ajustá la ruta 
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
