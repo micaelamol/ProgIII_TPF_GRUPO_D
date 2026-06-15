@@ -8,11 +8,19 @@ const router = express.Router();
 
 const turnosReservasControlador = new TurnosReservasControlador();
 
-///// AGREGU//////////////
+/**
+ * @swagger
+ * tags:
+ *   name: Turnos-Reservas
+ *   description: Endpoints para gestionar turnos y reservas
+ */
+
+
 /**
  * @swagger
  * /api/v1/turnos-reservas/por-especialidad:
  *   get:
+ *     tags: [Turnos-Reservas]
  *     summary: Generar informe PDF de turnos por especialidad
  *     description: Solo admin (3). Devuelve un PDF con estadísticas agrupadas por especialidad.
  *     responses:
@@ -24,18 +32,7 @@ const turnosReservasControlador = new TurnosReservasControlador();
  *         description: Error interno
  */
 router.get('/por-especialidad', autorizarUsuarios([3]), turnosReservasControlador.porEspecialidad);
-//router.get('/por-especialidad', turnosReservasControlador.porEspecialidad); como lo hizo el profe
 
-///////////////////////
-
-
-
-/**
- * @swagger
- * tags:
- *   name: Turnos-Reservas
- *   description: Endpoints para gestionar turnos y reservas
- */
 
 /**
  * @swagger
@@ -66,7 +63,6 @@ router.get('/por-especialidad', autorizarUsuarios([3]), turnosReservasControlado
  *       403:
  *         description: Sin permisos
  */
-// Agregar autenticaciones aca segun el rol
 router.post('/', autorizarUsuarios([2, 3]),
     [
         check('id_medico')
@@ -101,6 +97,7 @@ router.get('/estadisticas', autorizarUsuarios([3]), turnosReservasControlador.ob
  * @swagger
  * /api/v1/turnos-reservas/estadisticas-especialidad:
  *   get:
+ *     tags: [Turnos-Reservas]
  *     summary: Obtener estadísticas de turnos por especialidad
  *     description: Solo admin (3). Ejecuta un stored procedure.
  *     responses:

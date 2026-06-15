@@ -6,7 +6,7 @@ import { validarCampos } from '../../middlewares/validarCampos.js';
 /**
  * @swagger
  * tags:
- *   name: renovar la contraseña
+ *   name: Renovar la contraseña
  *   description: Endpoints para renovar la contraseña
  */
  
