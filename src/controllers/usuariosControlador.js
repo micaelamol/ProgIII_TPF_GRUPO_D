@@ -24,7 +24,7 @@ const obtenerUsuarioPorId = async (req, res) => {
         const { id_usuario } = req.params;
 
         const usuario = await UsuariosServicio.obtenerUsuarioPorId(id_usuario);
-
+        delete usuario.contrasenia;
         res.status(200).json({
             usuario,
             estado: true,
