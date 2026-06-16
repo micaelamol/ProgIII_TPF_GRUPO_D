@@ -55,6 +55,7 @@ router.get(
 //Get paciente por ID
 router.get(
  "/:id_paciente", autorizarUsuarios([1,3]),
+ 
  [
  param("id_paciente", "El ID debe ser un número entero").isInt(),
  validarCampos
@@ -108,6 +109,7 @@ router.post(
 
  validarCampos
 ], autorizarUsuarios([1,3]),
+ 
 pacientesController.crearPaciente
 );
 
@@ -158,6 +160,7 @@ router.put(
 
     validarCampos
   ], autorizarUsuarios([1,3]),
+
   pacientesController.actualizarPaciente
 );
 
@@ -185,6 +188,7 @@ router.put(
 //DELETE paciente
 router.delete(
  "/:id_paciente",autorizarUsuarios([1,3]),
+
  [
  param("id_paciente", "El ID debe ser un número entero").isInt(),
  validarCampos
