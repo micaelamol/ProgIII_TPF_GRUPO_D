@@ -154,6 +154,7 @@ POST /api/v1/password/reset
 src/
 ├── config/
 ├── controllers/
+├── database/
 ├── db/
 ├── middlewares/
 ├── publico/
@@ -233,6 +234,34 @@ Ejemplo:
 ```txt
 http://localhost:3000/perfil.html
 ```
+
+---
+
+## 🗄️ Base de datos
+
+El script de la base de datos se encuentra en:
+
+```txt
+database/prog3_turnos.sql
+```
+
+### Importación
+
+1. Crear una base de datos llamada `prog3_turnos`.
+2. Abrir phpMyAdmin.
+3. Seleccionar la opción **Importar**.
+4. Elegir el archivo `database/prog3_turnos.sql`.
+5. Ejecutar la importación.
+
+### Datos incluidos
+
+El script contiene:
+
+- Estructura completa de la base de datos.
+- Relaciones entre tablas (Foreign Keys).
+- Datos de prueba.
+- Vistas.
+- Procedimientos almacenados.
 
 ---
 
