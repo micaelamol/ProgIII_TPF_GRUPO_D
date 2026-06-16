@@ -13,7 +13,7 @@ export async function autentication(req, res, next) {
       const datos = jwt.verify(token, process.env.SECRET_KEY);
       
 
-      const client = await createClient({url: 'redis://default:RO4vsO0cjg4jHlpFaNbKGaO0T5qUANev@tendency-island-grade-36016.db.redis.io:13527'});
+      const client = await createClient({url: process.env.REDIS_HOST});
       await client.connect();
       const estaAnulado = await client.exists(`revoked_${token}`) === 1;
       

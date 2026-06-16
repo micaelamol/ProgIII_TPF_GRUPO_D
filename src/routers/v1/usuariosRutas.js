@@ -28,7 +28,7 @@ const router = Router();
 
 // GET de todos los usuarios
 router.get(
-    "/",autorizarUsuarios([1,3]),
+    "/",autorizarUsuarios([3]),
     UsuariosController.obtenerUsuarios
 );
 
@@ -55,7 +55,7 @@ router.get(
 
 // GET — usuario por ID
 router.get(
-    "/:id_usuario", autorizarUsuarios([1,3]),
+    "/:id_usuario", autorizarUsuarios([3]),
     [
         param("id_usuario", "El ID debe ser un número entero").isInt(),
         validarCampos
@@ -160,7 +160,7 @@ router.post(
             .withMessage("Activo debe ser 0 o 1."),
 
         validarCampos
-    ],autorizarUsuarios([1,3]),
+    ],autorizarUsuarios([3]),
     UsuariosController.crearUsuario
 );
 
@@ -259,7 +259,7 @@ router.put(
             .withMessage("Activo debe ser 0 o 1."),
 
         validarCampos
-    ], autorizarUsuarios([1,3]),
+    ], autorizarUsuarios([3]),
     UsuariosController.actualizarUsuario
 );
 
@@ -293,7 +293,7 @@ router.delete(
     [
         param("id_usuario", "El ID debe ser un número entero").isInt(),
         validarCampos
-    ], autorizarUsuarios([1,3]),
+    ], autorizarUsuarios([3]),
     UsuariosController.eliminarUsuario
 );
 
