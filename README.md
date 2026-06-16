@@ -154,6 +154,7 @@ POST /api/v1/password/reset
 src/
 ├── config/
 ├── controllers/
+├── database/
 ├── db/
 ├── middlewares/
 ├── publico/
@@ -261,6 +262,8 @@ El script contiene:
 - Datos de prueba.
 - Vistas.
 - Procedimientos almacenados.
+
+---
 
 ## 🗄️ Cambios en la base de datos
 
