@@ -64,7 +64,36 @@ router.get(
 );
 
 
-
+/**
+ * @swagger
+ * /api/v1/pacientes:
+ *   post:
+ *     summary: Crear un paciente
+ *     tags: [Pacientes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id_usuario
+ *               - id_obra_social
+ *             properties:
+ *               id_usuario:
+ *                 type: integer
+ *                 example: 1
+ *                 description: ID del usuario asociado al paciente
+ *               id_obra_social:
+ *                 type: integer
+ *                 example: 2
+ *                 description: ID de la obra social asociada al paciente
+ *     responses:
+ *       201:
+ *         description: Paciente creado correctamente
+ *       404:
+ *         description: No encontrado
+ *  */
 
 //POST  crear paciente
 router.post(
