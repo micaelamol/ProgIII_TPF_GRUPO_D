@@ -2,6 +2,7 @@ import { Router } from "express";
 import { check, param } from "express-validator";
 import { pacientesController } from "../../controllers/pacientesControlador.js";
 import { validarCampos } from "../../middlewares/validarCampos.js";
+import { autorizarUsuarios } from "../../middlewares/autorizarUsuarios.js";
 
 const router = Router();
 
@@ -26,7 +27,10 @@ const router = Router();
 
 
 //GET
-router.get("/", pacientesController.obtenerPacientes);
+router.get(
+  "/", autorizarUsuarios([1,3]), 
+  pacientesController.obtenerPacientes);
+
 
 
 /**
@@ -50,7 +54,7 @@ router.get("/", pacientesController.obtenerPacientes);
 
 //Get paciente por ID
 router.get(
- "/:id_paciente",
+ "/:id_paciente", autorizarUsuarios([1,3]),
  [
  param("id_paciente", "El ID debe ser un número entero").isInt(),
  validarCampos
@@ -74,7 +78,7 @@ router.post(
  .withMessage("El id_obra_social debe ser un número entero."),
 
  validarCampos
-],
+], autorizarUsuarios([1,3]),
 pacientesController.crearPaciente
 );
 
@@ -124,7 +128,7 @@ router.put(
       .withMessage("El id_obra_social debe ser un número entero."),
 
     validarCampos
-  ],
+  ], autorizarUsuarios([1,3]),
   pacientesController.actualizarPaciente
 );
 
@@ -151,7 +155,7 @@ router.put(
 
 //DELETE paciente
 router.delete(
- "/:id_paciente",
+ "/:id_paciente",autorizarUsuarios([1,3]),
  [
  param("id_paciente", "El ID debe ser un número entero").isInt(),
  validarCampos
