@@ -67,11 +67,11 @@ http://localhost:3000/docs
 
 ## 👤 Usuarios de prueba
 
-| Rol               | Email                                         | Contraseña  |
-| ----------------- | --------------------------------------------- | ----------- |
-| Administrador (3) | [admin@test.com](mailto:admin@test.com)       | admin123    |
-| Médico (1)        | [medico@test.com](mailto:medico@test.com)     | medico123   |
-| Paciente (2)      | [paciente@test.com](mailto:paciente@test.com) | paciente123 |
+| Rol               | Email             | Contraseña  |
+| ----------------- | ----------------- | ----------- |
+| Administrador (3) | admin@test.com    | admin123    |
+| Médico (1)        | medico@test.com   | medico123   |
+| Paciente (2)      | paciente@test.com | paciente123 |
 
 ---
 
