@@ -2,6 +2,7 @@ import { Router } from "express";
 import { check, param } from "express-validator";
 import { medicosController } from "../../controllers/medicosControlador.js";
 import { validarCampos } from "../../middlewares/validarCampos.js";
+import { autorizarUsuarios } from "../../middlewares/autorizarUsuarios.js";
 
 const router = Router();
 
@@ -18,7 +19,7 @@ const router = Router();
  *       200:
  *         description: Lista de médicos
  */
-router.get("/", medicosController.obtenerMedicos);
+router.get("/",autorizarUsuarios([2,3]), medicosController.obtenerMedicos);
 
 /**
  * @openapi
@@ -40,7 +41,7 @@ router.get("/", medicosController.obtenerMedicos);
  *         description: Médico no encontrado
  */
 router.get(
-  "/:id_medico",
+  "/:id_medico",autorizarUsuarios([2,3]),
   [
     param("id_medico", "El ID debe ser un número entero").isInt(),
     validarCampos,
@@ -186,7 +187,7 @@ router.get(
  */
 
 router.post(
-  "/",
+  "/",autorizarUsuarios([3]),
   [
     check("id_usuario", "El ID de usuario es obligatorio y numérico.")
       .notEmpty()
@@ -254,7 +255,7 @@ router.post(
  */
 
 router.put(
-  "/:id_medico",
+  "/:id_medico",autorizarUsuarios([3]),
   [
     param("id_medico", "El ID del médico debe ser un entero numérico").isInt(),
     check("id_usuario", "El ID de usuario es obligatorio y numérico.")
@@ -319,7 +320,7 @@ router.put(
  */
 
 router.delete(
-  "/:id_medico",
+  "/:id_medico",autorizarUsuarios([3]),
   [
     param("id_medico", "El ID del médico debe ser un entero numérico").isInt(),
     validarCampos,
